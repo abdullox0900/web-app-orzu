@@ -7,8 +7,14 @@ import useFetchData from '../hooks/useFetchers'
 
 function Categories() {
 
+    const langContext = useContext(Context)
+
+    if (!langContext) {
+        throw new Error('useContext must be inside a Provider with a valid value')
+    }
+
     const { data, loading, error } = useFetchData('https://app.orzugrand.uz/api/frontend/categories')
-    const { lang } = useContext(Context)
+    const { lang } = langContext
 
     if (loading) return <Loading />
     if (error) return <div>Xato: {error}</div>
