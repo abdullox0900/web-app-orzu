@@ -4,6 +4,13 @@ import Loading from '../components/loading/loading'
 import { Context } from '../context/langContext'
 import useFetchData from '../hooks/useFetchers'
 
+// Kategoriya ma'lumotlari uchun interfeys
+interface CategoryData {
+    data: {
+        children: any
+    }
+}
+
 function CategoriesChildren() {
 
     const langContext = useContext(Context)
@@ -15,7 +22,7 @@ function CategoriesChildren() {
     const { slug } = useParams<{ slug: string }>()
     const { lang } = langContext
 
-    const { data, loading, error } = useFetchData(`https://app.orzugrand.uz/api/frontend/categories/${slug}`)
+    const { data, loading, error } = useFetchData<CategoryData>(`https://app.orzugrand.uz/api/frontend/categories/${slug}`)
 
     if (loading) {
         return <Loading />

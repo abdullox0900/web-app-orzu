@@ -8,6 +8,10 @@ import { ShoppingCartContext } from '../context/shoppingCartContext'
 import useFetchData from '../hooks/useFetchers'
 import { content, ContentMap } from '../localization/content'
 
+interface CategoryData {
+    data: any
+}
+
 function CategoriesInner() {
 
     const context = useContext(ShoppingCartContext)
@@ -27,7 +31,7 @@ function CategoriesInner() {
 
     const xabarlar = content[lang as keyof ContentMap]
 
-    const { data, loading, error } = useFetchData(`https://app.orzugrand.uz/api/frontend/products/${slug}`)
+    const { data, loading, error } = useFetchData<CategoryData>(`https://app.orzugrand.uz/api/frontend/products/${slug}`)
 
     if (loading) {
         return <Loading />

@@ -1,23 +1,29 @@
-// src/hooks/useFetchData.js
-import { useEffect, useState } from 'react'
+// hooks/useFetchData.ts
+import { useState, useEffect } from 'react'
 
-const useFetchData = (url: string) => {
-	const [data, setData] = useState(null)
-	const [loading, setLoading] = useState(true)
-	const [error, setError] = useState('')
+// Ma'lumotlar strukturasini aniqlash uchun interfeys
+interface FetchData<T> {
+	data: T | null
+	loading: boolean
+	error: string | null
+}
+
+const useFetchData = <T,>(url: string): FetchData<T> => {
+	const [data, setData] = useState<T | null>(null)
+	const [loading, setLoading] = useState<boolean>(true)
+	const [error, setError] = useState<string | null>(null)
 
 	useEffect(() => {
 		const fetchData = async () => {
-			setLoading(true)
 			try {
 				const response = await fetch(url)
 				if (!response.ok) {
-					throw new Error('Tarmoq xatosi')
+					throw new Error('Ma\'lumotlarni yuklashda xatolik yuz berdi.')
 				}
 				const result = await response.json()
 				setData(result)
-			} catch (err) {
-				setError('Xatoli!')
+			} catch (error) {
+				setError('Ma\'lumotlarni yuklashda xatolik yuz berdi.')
 			} finally {
 				setLoading(false)
 			}

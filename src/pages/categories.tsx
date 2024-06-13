@@ -3,7 +3,9 @@ import { NavLink } from 'react-router-dom'
 import Loading from '../components/loading/loading'
 import { Context } from '../context/langContext'
 import useFetchData from '../hooks/useFetchers'
-
+interface CategoryData {
+    data: any
+}
 
 function Categories() {
 
@@ -13,7 +15,7 @@ function Categories() {
         throw new Error('useContext must be inside a Provider with a valid value')
     }
 
-    const { data, loading, error } = useFetchData('https://app.orzugrand.uz/api/frontend/categories')
+    const { data, loading, error } = useFetchData<CategoryData>('https://app.orzugrand.uz/api/frontend/categories')
     const { lang } = langContext
 
     if (loading) return <Loading />
