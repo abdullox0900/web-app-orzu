@@ -17,7 +17,7 @@ function Categories() {
         <>
             <ul className='flex flex-col gap-[15px] px-[20px] py-[20px]'>
                 {
-                    data?.data?.map((item, index: number) => {
+                    data?.data?.map((item: any, index: number) => {
                         return (
                             <NavLink to={`children/${item.slug}`} key={index}>
                                 <li className='flex items-center p-[10px] gap-[5px] rounded-[10px] border-[1px] border-slate-200 cursor-pointer'>

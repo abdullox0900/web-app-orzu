@@ -1,22 +1,41 @@
 import { useContext } from 'react'
-import { Buy, NoProduct } from '../../assets/ilustrations'
-import { Context } from '../../context/langContext'
-import { ShoppingCartContext } from '../../context/shoppingCartContext'
-import { content } from '../../localization/content'
 import { MdDeleteOutline } from "react-icons/md"
 import { NavLink } from 'react-router-dom'
+import { Buy } from '../../assets/ilustrations'
+import { Context } from '../../context/langContext'
+import { ShoppingCartContext } from '../../context/shoppingCartContext'
+import { content, ContentMap } from '../../localization/content'
+
+interface Item {
+    id: number
+    price: number
+    // Boshqa kerakli xususiyatlar
+}
 
 function Basket() {
 
-    const { lang } = useContext(Context)
-    const { cartItems, removeFromCart } = useContext(ShoppingCartContext)
+    const context = useContext(ShoppingCartContext)
+    const langContext = useContext(Context)
 
-    function formatUzbekSom(price) {
+    if (!context) {
+        throw new Error('useContext must be inside a Provider with a valid value')
+    }
+
+    if (!langContext) {
+        throw new Error('useContext must be inside a Provider with a valid value')
+    }
+
+    const { lang } = langContext
+    const { cartItems, removeFromCart } = context
+
+    const xabarlar = content[lang as keyof ContentMap]
+
+    function formatUzbekSom(price: number) {
         // Sonni raqamlar orasida bo'shliqlar qo'yish
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
     }
 
-    function sum(numbers) {
+    function sum(numbers: Item[]) {
         return numbers.reduce((total, num) => total + num.price, 0)
     }
 
@@ -26,10 +45,10 @@ function Basket() {
                 cartItems.length == 0 ? (
                     <div className='flex flex-col items-center justify-center'>
                         <Buy />
-                        <span className='text-center text-[22px] mb-[5px]'>{content[lang].buy1}</span>
-                        <span className='mb-[10px]'>{content[lang].buy2}</span>
+                        <span className='text-center text-[22px] mb-[5px]'>{xabarlar.buy1}</span>
+                        <span className='mb-[10px]'>{xabarlar.buy2}</span>
                         <NavLink to="/" className="bg-orange-500 px-[20px] py-[10px] rounded-[10px] text-white">
-                            {content[lang].not_found_link}
+                            {xabarlar.not_found_link}
                         </NavLink>
                     </div>
                 ) : (
@@ -42,7 +61,7 @@ function Basket() {
                                             <img className='w-[110px] h-[110px]' src={item.image} alt="" />
                                             <div>
                                                 <div>{item[`title_${lang}`]}</div>
-                                                <div className='text-[16px] text-[#ffa500]'>{`${formatUzbekSom(item.price)} ${content[lang].som}`}</div>
+                                                <div className='text-[16px] text-[#ffa500]'>{`${formatUzbekSom(item.price)} ${xabarlar.som}`}</div>
                                             </div>
                                             <button className='absolute right-[20px] bottom-[20px] text-[22px] text-red-500' onClick={() => removeFromCart(item.id)}>
                                                 <MdDeleteOutline />
@@ -52,7 +71,7 @@ function Basket() {
                                 })
                             }
                         </ul>
-                        <div className='pl-[20px] text-[20px]'>Jami: <span className='text-[18px] text-[#ffa500]'>{`${formatUzbekSom(sum(cartItems))} ${content[lang].som}`}</span></div>
+                        <div className='pl-[20px] text-[20px]'>Jami: <span className='text-[18px] text-[#ffa500]'>{`${formatUzbekSom(sum(cartItems))} ${xabarlar.som}`}</span></div>
                     </>
                 )
             }

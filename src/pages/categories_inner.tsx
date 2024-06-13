@@ -46,7 +46,7 @@ function CategoriesInner() {
                 ) : (
                     <ul className='grid grid-cols-2 gap-4 px-[20px] py-[20px]'>
                         {
-                            data?.data?.map((item, index: number) => {
+                            data?.data?.map((item: any, index: number) => {
                                 return (
                                     <li key={index} className='flex flex-col gap-[8px] items-start p-[10px] rounded-[10px] border-[1px] border-[#ffa500] cursor-pointer h-[290px] transition duration-500 ease-in-out hover:border-[#ffa500]'>
                                         <img className='w-[110px] h-[110px] mx-auto mb-[10px]' src={item.image} alt="" />

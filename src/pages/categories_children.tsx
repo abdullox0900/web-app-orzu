@@ -1,13 +1,19 @@
-import { NavLink, useParams } from 'react-router-dom'
-import useFetchData from '../hooks/useFetchers'
-import { Context } from '../context/langContext'
 import { useContext } from 'react'
+import { NavLink, useParams } from 'react-router-dom'
 import Loading from '../components/loading/loading'
+import { Context } from '../context/langContext'
+import useFetchData from '../hooks/useFetchers'
 
 function CategoriesChildren() {
 
-    const { slug } = useParams()
-    const { lang } = useContext(Context)
+    const langContext = useContext(Context)
+
+    if (!langContext) {
+        throw new Error('useContext must be inside a Provider with a valid value')
+    }
+
+    const { slug } = useParams<{ slug: string }>()
+    const { lang } = langContext
 
     const { data, loading, error } = useFetchData(`https://app.orzugrand.uz/api/frontend/categories/${slug}`)
 
@@ -15,11 +21,15 @@ function CategoriesChildren() {
         return <Loading />
     }
 
+    if (error || !data) {
+        return <div>Xatolik yuz berdi: {error}</div> // Xatolik bo'lsa xato xabarni qaytarish
+    }
+
     return (
         <>
             <ul className='grid grid-cols-2 gap-4 px-[20px] py-[20px]'>
                 {
-                    data?.data?.children?.map((item, index: number) => {
+                    data?.data?.children?.map((item: any, index: number) => {
                         return (
                             <NavLink to={`/children_inner/${item.slug}`} key={index}>
                                 <li className='flex flex-col items-center p-[10px] gap-[5px] rounded-[10px] border-[1px] border-slate-200 cursor-pointer  duration-500 ease-in-out hover:border-[#ffa500]'>

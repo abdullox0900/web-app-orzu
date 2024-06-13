@@ -1,18 +1,32 @@
 // Import React
-import { createContext, useEffect, useState } from "react"
+import React, { createContext, useEffect, useState, ReactNode } from "react"
 
-const Context = createContext()
+type ContextType = {
+    lang: string
+    setLang: React.Dispatch<React.SetStateAction<string>>
+}
 
-function Provider({ children }) {
+const Context = createContext<ContextType | undefined>(undefined)
 
-    const [lang, setLang] = useState(window.localStorage.getItem("lang") || "uz")
+type ProviderProps = {
+    children: ReactNode
+}
+
+function Provider({ children }: ProviderProps) {
+    const [lang, setLang] = useState<string>(
+        window.localStorage.getItem("lang") || "uz"
+    )
 
     useEffect(() => {
         window.localStorage.setItem("lang", lang)
     }, [lang])
 
-    return (
-        <Context.Provider value={{ lang, setLang }}>{children}</Context.Provider>
-    )
+    const contextValue = {
+        lang,
+        setLang,
+    }
+
+    return <Context.Provider value={contextValue}>{children}</Context.Provider>
 }
+
 export { Context, Provider }

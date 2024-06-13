@@ -1,4 +1,37 @@
-export const content = {
+export interface ContentMap {
+	uz: {
+		all: string
+		buy1: string
+		buy2: string
+		not_found_link: string
+		som: string
+		not_found: string
+		no_product: string
+		// Boshqa kerakli xususiyatlar
+	}
+	uzc: {
+		all: string
+		buy1: string
+		buy2: string
+		not_found_link: string
+		som: string
+		not_found: string
+		no_product: string
+		// Boshqa kerakli xususiyatlar
+	}
+	ru: {
+		all: string
+		buy1: string
+		buy2: string
+		not_found_link: string
+		som: string
+		not_found: string
+		no_product: string
+		// Boshqa kerakli xususiyatlar
+	}
+}
+
+export const content: ContentMap = {
 	uz: {
 		not_found: 'Sahifa topilmadi',
 		not_found_link: 'Bosh sahifaga qaytish',
@@ -6,6 +39,7 @@ export const content = {
 		som: "so'm",
 		buy1: "Savatchangiz bo'sh",
 		buy2: "Lekin siz uni har doim to'ldirishingiz mumkin",
+		all: 'Jami:',
 	},
 	uzc: {
 		not_found: 'Саҳифа топилмади',
@@ -14,6 +48,7 @@ export const content = {
 		som: 'сўм',
 		buy1: 'Саватчангиз бўш',
 		buy2: 'Лекин сиз уни хар доим тўлдиришингиз мумкин',
+		all: 'Jami:',
 	},
 	ru: {
 		not_found: 'Страница не найдена',
@@ -22,5 +57,6 @@ export const content = {
 		som: 'сум',
 		buy1: 'Ваша корзина пуста',
 		buy2: 'Но вы всегда можете ее наполнить',
+		all: 'Jami:',
 	},
 }

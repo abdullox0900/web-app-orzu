@@ -1,15 +1,26 @@
 import { Badge, Select } from 'antd'
 import { useContext } from 'react'
-import { Context } from '../../context/langContext'
-import ImgSiteLogo from '../../assets/logo.svg'
-import { NavLink } from 'react-router-dom'
 import { SlBasket } from "react-icons/sl"
+import { NavLink } from 'react-router-dom'
+import ImgSiteLogo from '../../assets/logo.svg'
+import { Context } from '../../context/langContext'
 import { ShoppingCartContext } from '../../context/shoppingCartContext'
 
 function Header() {
 
-    const { lang, setLang } = useContext(Context)
-    const { cartItems } = useContext(ShoppingCartContext)
+    const context = useContext(ShoppingCartContext)
+    const langContext = useContext(Context)
+
+    if (!context) {
+        throw new Error('useContext must be inside a Provider with a valid value')
+    }
+
+    if (!langContext) {
+        throw new Error('useContext must be inside a Provider with a valid value')
+    }
+
+    const { lang, setLang } = langContext
+    const { cartItems } = context
 
     const handleChange = (value: string) => {
         setLang(value)
