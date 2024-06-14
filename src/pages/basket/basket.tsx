@@ -53,7 +53,7 @@ function Basket() {
                     </div>
                 ) : (
                     <>
-                        <ul className='flex flex-col gap-[20px] p-[20px]'>
+                        <ul className='flex flex-col gap-[20px] p-[20px] mb-[110px]'>
                             {
                                 cartItems.map((item, index) => {
                                     return (
@@ -71,7 +71,12 @@ function Basket() {
                                 })
                             }
                         </ul>
-                        <div className='pl-[20px] text-[20px]'>Jami: <span className='text-[18px] text-[#ffa500]'>{`${formatUzbekSom(sum(cartItems))} ${xabarlar.som}`}</span></div>
+                        <div className='fixed w-full bg-white bottom-0 left-0 border-t-[1px] border-slate-200'>
+                            <div className='py-[15px] px-[20px] text-[20px]'>Jami: <span className='text-[18px] text-[#ffa500]'>{`${formatUzbekSom(sum(cartItems))} ${xabarlar.som}`}</span></div>
+                            <button className="w-full bg-orange-500 px-[20px] py-[15px] text-white">
+                                Sotib olish
+                            </button>
+                        </div>
                     </>
                 )
             }

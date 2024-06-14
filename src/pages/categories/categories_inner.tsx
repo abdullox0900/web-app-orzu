@@ -1,8 +1,10 @@
 import { useContext } from 'react'
+import { SlBasket } from 'react-icons/sl'
 import { NavLink, useParams } from 'react-router-dom'
 import { NoProduct } from '../../assets/ilustrations'
 import Loading from '../../components/loading/loading'
 import { Context } from '../../context/langContext'
+import { ShoppingCartContext } from '../../context/shoppingCartContext'
 import useFetchData from '../../hooks/useFetchers'
 import { content, ContentMap } from '../../localization/content'
 
@@ -13,10 +15,17 @@ interface CategoryData {
 function CategoriesInner() {
 
     const langContext = useContext(Context)
+    const shoppingContext = useContext(ShoppingCartContext)
 
     if (!langContext) {
         throw new Error('useContext must be inside a Provider with a valid value')
     }
+
+    if (!shoppingContext) {
+        throw new Error('useContext must be inside a Provider with a valid value')
+    }
+
+    const { addToCart } = shoppingContext
 
     const { lang } = langContext
     const { slug } = useParams()
@@ -60,9 +69,9 @@ function CategoriesInner() {
                                             <div className='text-left text-[16px]'>{item[`title_${lang}`].length > 14 ? item[`title_${lang}`].slice(0, 14) + '...' : item[`title_${lang}`]}</div>
                                             <div className='text-[16px] text-[#ffa500]'>{`${formatUzbekSom(item.price)} ${xabarlar.som}`}</div>
                                             <span className='text-[11px] bg-[#F16736] text-white p-[4px] rounded-[5px] mb-[8px]'>{`${formatUzbekSom(item.monthly_pay)} ${xabarlar.som} * 1 oy`}</span>
-                                            {/* <button className='flex flex-col items-center justify-center text-[18px] w-full h-[40px] text-green-500 border-[1px] border-green-500 rounded-[8px]' onClick={() => addToCart(item)}>
+                                            <button className='flex flex-col items-center justify-center text-[18px] w-full h-[40px] text-green-500 border-[1px] border-green-500 rounded-[8px]' onClick={() => addToCart(item)}>
                                                 <SlBasket />
-                                             </button> */}
+                                            </button>
                                         </li>
                                     </NavLink>
                                 )
