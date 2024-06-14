@@ -1,8 +1,8 @@
 import { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
-import Loading from '../components/loading/loading'
-import { Context } from '../context/langContext'
-import useFetchData from '../hooks/useFetchers'
+import Loading from '../../components/loading/loading'
+import { Context } from '../../context/langContext'
+import useFetchData from '../../hooks/useFetchers'
 interface CategoryData {
     data: any
 }
