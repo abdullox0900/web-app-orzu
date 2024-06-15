@@ -32,7 +32,7 @@ function Categories() {
                     data?.data?.map((item: any, index: number) => {
                         return (
                             <NavLink to={`children/${item.slug}`} key={index}>
-                                <li style={theme == 'dark' ? { color: 'white' } : { color: '' }} className='flex items-center p-[10px] gap-[5px] rounded-[10px] border-[1px] border-slate-200 cursor-pointer'>
+                                <li style={theme == 'dark' ? { color: 'white', backgroundColor: '#27314a', borderColor: '#27314a' } : { color: '' }} className='flex items-center p-[10px] gap-[5px] rounded-[10px] border-[1px] border-slate-200 cursor-pointer'>
                                     <img className='w-[35px] h-[35px]' src={item.image} alt="" />
                                     <span>{item[`title_${lang}`]}</span>
                                 </li>
