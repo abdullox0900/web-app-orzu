@@ -1,5 +1,4 @@
 import { useContext } from 'react'
-import { SlBasket } from 'react-icons/sl'
 import { NavLink, useParams } from 'react-router-dom'
 import { NoProduct } from '../../assets/ilustrations'
 import Loading from '../../components/loading/loading'
@@ -25,8 +24,6 @@ function CategoriesInner() {
         throw new Error('useContext must be inside a Provider with a valid value')
     }
 
-    const { addToCart } = shoppingContext
-
     const { lang } = langContext
     const { slug } = useParams()
 
@@ -39,14 +36,13 @@ function CategoriesInner() {
     }
 
     if (error || !data) {
-        return <div>Xatolik yuz berdi: {error}</div> // Xatolik bo'lsa xato xabarni qaytarish
+        return <div>Xatolik yuz berdi: {error}</div>
     }
 
     console.log(data)
 
 
     function formatUzbekSom(price: number) {
-        // Sonni raqamlar orasida bo'shliqlar qo'yish
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
     }
 
@@ -63,7 +59,7 @@ function CategoriesInner() {
                         {
                             data?.data?.map((item: any, index: number) => {
                                 return (
-                                    <NavLink key={index} to="/children_item/10">
+                                    <NavLink key={index} to={`/children_item/${item.slug}`}>
                                         <li className='flex flex-col gap-[8px] items-start p-[10px] rounded-[10px] border-[1px] border-slate-200 cursor-pointer h-[240px] transition duration-500 ease-in-out hover:border-[#ffa500]'>
                                             <img className='w-[110px] h-[110px] mx-auto mb-[10px]' src={item.image} alt="" />
                                             <div className='text-left text-[16px]'>{item[`title_${lang}`].length > 14 ? item[`title_${lang}`].slice(0, 14) + '...' : item[`title_${lang}`]}</div>

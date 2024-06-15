@@ -9,7 +9,6 @@ import { content, ContentMap } from '../../localization/content'
 interface Item {
     id: number
     price: number
-    // Boshqa kerakli xususiyatlar
 }
 
 function Basket() {
@@ -31,7 +30,6 @@ function Basket() {
     const xabarlar = content[lang as keyof ContentMap]
 
     function formatUzbekSom(price: number) {
-        // Sonni raqamlar orasida bo'shliqlar qo'yish
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
     }
 
@@ -58,7 +56,7 @@ function Basket() {
                                 cartItems.map((item, index) => {
                                     return (
                                         <li key={index} className='w-full flex gap-[10px] items-start relative p-[20px] rounded-[10px] border-[1px] border-slate-200'>
-                                            <img className='w-[110px] h-[110px]' src={item.image} alt="" />
+                                            <img className='w-[110px] h-[110px]' src={item.images[0].image} alt="" />
                                             <div>
                                                 <div>{item[`title_${lang}`]}</div>
                                                 <div className='text-[16px] text-[#ffa500]'>{`${formatUzbekSom(item.price)} ${xabarlar.som}`}</div>

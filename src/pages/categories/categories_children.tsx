@@ -4,7 +4,6 @@ import Loading from '../../components/loading/loading'
 import { Context } from '../../context/langContext'
 import useFetchData from '../../hooks/useFetchers'
 
-// Kategoriya ma'lumotlari uchun interfeys
 interface CategoryData {
     data: {
         children: any
@@ -29,7 +28,7 @@ function CategoriesChildren() {
     }
 
     if (error || !data) {
-        return <div>Xatolik yuz berdi: {error}</div> // Xatolik bo'lsa xato xabarni qaytarish
+        return <div>Xatolik yuz berdi: {error}</div>
     }
 
     return (
