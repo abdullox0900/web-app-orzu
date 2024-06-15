@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { Buy } from '../../assets/ilustrations'
 import { Context } from '../../context/langContext'
 import { ShoppingCartContext } from '../../context/shoppingCartContext'
+import useTelegramTheme from '../../hooks/useTelegramTheme'
 import { content, ContentMap } from '../../localization/content'
 
 interface Item {
@@ -15,6 +16,7 @@ function Basket() {
 
     const context = useContext(ShoppingCartContext)
     const langContext = useContext(Context)
+    const theme = useTelegramTheme()
 
     if (!context) {
         throw new Error('useContext must be inside a Provider with a valid value')
@@ -43,8 +45,8 @@ function Basket() {
                 cartItems.length == 0 ? (
                     <div className='flex flex-col items-center justify-center'>
                         <Buy />
-                        <span className='text-center text-[22px] mb-[5px]'>{xabarlar.buy1}</span>
-                        <span className='mb-[10px]'>{xabarlar.buy2}</span>
+                        <span style={theme == 'dark' ? { color: 'white' } : {}} className='text-center text-[22px] mb-[5px]'>{xabarlar.buy1}</span>
+                        <span style={theme == 'dark' ? { color: 'white' } : {}} className='mb-[10px]'>{xabarlar.buy2}</span>
                         <NavLink to="/" className="bg-orange-500 px-[20px] py-[10px] rounded-[10px] text-white">
                             {xabarlar.not_found_link}
                         </NavLink>
@@ -55,10 +57,10 @@ function Basket() {
                             {
                                 cartItems.map((item, index) => {
                                     return (
-                                        <li key={index} className='w-full flex gap-[10px] items-start relative p-[20px] rounded-[10px] border-[1px] border-slate-200'>
+                                        <li key={index} style={theme == 'dark' ? { backgroundColor: '#27314a', borderColor: '#27314a' } : {}} className='w-full flex gap-[10px] items-start relative p-[20px] rounded-[10px] border-[1px] border-slate-200'>
                                             <img className='w-[110px] h-[110px]' src={item.images[0].image} alt="" />
                                             <div>
-                                                <div>{item[`title_${lang}`]}</div>
+                                                <div style={theme == 'dark' ? { color: 'white' } : {}}>{item[`title_${lang}`]}</div>
                                                 <div className='text-[16px] text-[#ffa500]'>{`${formatUzbekSom(item.price)} ${xabarlar.som}`}</div>
                                             </div>
                                             <button className='absolute right-[20px] bottom-[20px] text-[22px] text-red-500' onClick={() => removeFromCart(item.id)}>
@@ -69,8 +71,8 @@ function Basket() {
                                 })
                             }
                         </ul>
-                        <div className='fixed w-full bg-white bottom-0 left-0 border-t-[1px] border-slate-200'>
-                            <div className='py-[15px] px-[20px] text-[20px]'>Jami: <span className='text-[18px] text-[#ffa500]'>{`${formatUzbekSom(sum(cartItems))} ${xabarlar.som}`}</span></div>
+                        <div style={theme == 'dark' ? { backgroundColor: '#27314a', borderColor: '#27314a' } : {}} className='fixed w-full bg-white bottom-0 left-0 border-t-[1px] border-slate-200'>
+                            <div style={theme == 'dark' ? { color: 'white' } : {}} className='py-[15px] px-[20px] text-[20px]'>Jami: <span className='text-[18px] text-[#ffa500]'>{`${formatUzbekSom(sum(cartItems))} ${xabarlar.som}`}</span></div>
                             <button className="w-full bg-orange-500 px-[20px] py-[15px] text-white">
                                 Sotib olish
                             </button>

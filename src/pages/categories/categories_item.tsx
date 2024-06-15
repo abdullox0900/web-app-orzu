@@ -80,7 +80,7 @@ function CategoriesItem() {
                 <div style={theme == 'dark' ? { color: 'white' } : {}} className='text-[22px] mb-[5px]'>Tavsifi</div>
                 <p className='text-[14px] text-[#999]'>{product[`description_${lang}`]}</p>
             </div>
-            <div style={theme == 'dark' ? { backgroundColor: '#27314a' } : {}} className='fixed flex items-center justify-between px-[20px] bottom-0 left-0 w-full h-[60px] bg-white border-t-[1px] border-slate-200'>
+            <div style={theme == 'dark' ? { backgroundColor: '#27314a', borderColor: '#27314a' } : {}} className='fixed flex items-center justify-between px-[20px] bottom-0 left-0 w-full h-[60px] bg-white border-t-[1px] border-slate-200'>
                 <div className='text-[22px] font-bold text-[#ffa500]'>{`${formatUzbekSom(product.price)} ${xabarlar.som}`}</div>
 
                 <button className='flex flex-col items-center justify-center text-[18px] w-[100px] h-[40px] text-green-500 border-[1px] border-green-500 rounded-[8px]' onClick={() => addToCart(product)}>
