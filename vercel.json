@@ -1,19 +1,8 @@
 {
-	"version": 2,
-	"builds": [
+	"rewrites": [
 		{
-			"src": "src/**/*.tsx",
-			"use": "@vercel/node"
-		},
-		{
-			"src": "public/index.html",
-			"use": "@vercel/static"
-		}
-	],
-	"routes": [
-		{
-			"src": "/(.*)",
-			"dest": "/index.html"
+			"source": "/(.*)",
+			"destination": "/"
 		}
 	]
 }
