@@ -1,8 +1,12 @@
+import useTelegramTheme from '../../hooks/useTelegramTheme'
 import './loading.css'
 
 function Loading() {
+
+    const theme = useTelegramTheme()
+
     return (
-        <div className='w-full h-screen bg-white flex justify-center items-center'>
+        <div style={theme == 'dark' ? { backgroundColor: '#151a28' } : { backgroundColor: '' }} className='fixed top-0 left-0 w-full h-screen bg-white flex justify-center items-center'>
             <div className="simple-spinner">
                 <span></span>
             </div>
