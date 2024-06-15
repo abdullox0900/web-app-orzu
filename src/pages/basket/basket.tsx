@@ -110,7 +110,7 @@ function Basket() {
                         </ul>
                         <div style={theme == 'dark' ? { backgroundColor: '#27314a', borderColor: '#27314a' } : {}} className='fixed w-full bg-white bottom-0 left-0 border-t-[1px] border-slate-200'>
                             <div style={theme == 'dark' ? { color: 'white' } : {}} className='py-[15px] px-[20px] text-[20px]'>Jami: <span className='text-[18px] text-[#ffa500]'>{`${formatUzbekSom(sum(cartItems))} ${xabarlar.som}`}</span></div>
-                            <button className="w-full bg-orange-500 px-[20px] py-[15px] text-white" onChange={handleButtonClick}>
+                            <button className="w-full bg-orange-500 px-[20px] py-[15px] text-white">
                                 Sotib olish
                             </button>
                         </div>
