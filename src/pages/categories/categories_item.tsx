@@ -10,6 +10,7 @@ import useFetchData from '../../hooks/useFetchers'
 import { content, ContentMap } from '../../localization/content'
 
 import "swiper/css"
+import useTelegramTheme from '../../hooks/useTelegramTheme'
 
 interface CategoryData {
     data: any
@@ -19,6 +20,7 @@ function CategoriesItem() {
 
     const shoppingContext = useContext(ShoppingCartContext)
     const langContext = useContext(Context)
+    const theme = useTelegramTheme()
     const { slug } = useParams()
 
     const { data, loading, error } = useFetchData<CategoryData>(`https://app.orzugrand.uz/api/frontend/products/view/${slug}`)
@@ -51,9 +53,6 @@ function CategoriesItem() {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
     }
 
-    console.log(data)
-
-
     return (
         <section className='p-[20px]'>
             <Swiper className="mySwiper mb-[25px]">
@@ -69,7 +68,7 @@ function CategoriesItem() {
 
             </Swiper>
             <div className='flex flex-col gap-[10px] items-start mb-[70px]'>
-                <div className='text-[18px]'>{product[`title_${lang}`]}</div>
+                <div style={theme == 'dark' ? { color: 'white' } : {}} className='text-[18px]'>{product[`title_${lang}`]}</div>
                 <div className='text-[18px] text-[#ffa500]'>{`${formatUzbekSom(product.price)} ${xabarlar.som}`}</div>
                 <span className='text-[12px] bg-[#F16736] text-white p-[4px] rounded-[5px]'>{`${formatUzbekSom(product.monthly_pay)} ${xabarlar.som} * 1 oy`}</span>
 
@@ -78,10 +77,10 @@ function CategoriesItem() {
                     <span className='text-[14px] text-gray-500'>{product.delivery_information[`short_description_${lang}`]}</span>
                 </div>
 
-                <div className='text-[22px] mb-[5px]'>Tavsifi</div>
+                <div style={theme == 'dark' ? { color: 'white' } : {}} className='text-[22px] mb-[5px]'>Tavsifi</div>
                 <p className='text-[14px] text-[#999]'>{product[`description_${lang}`]}</p>
             </div>
-            <div className='fixed flex items-center justify-between px-[20px] bottom-0 left-0 w-full h-[60px] bg-white border-t-[1px] border-slate-200'>
+            <div style={theme == 'dark' ? { backgroundColor: '#27314a' } : {}} className='fixed flex items-center justify-between px-[20px] bottom-0 left-0 w-full h-[60px] bg-white border-t-[1px] border-slate-200'>
                 <div className='text-[22px] font-bold text-[#ffa500]'>{`${formatUzbekSom(product.price)} ${xabarlar.som}`}</div>
 
                 <button className='flex flex-col items-center justify-center text-[18px] w-[100px] h-[40px] text-green-500 border-[1px] border-green-500 rounded-[8px]' onClick={() => addToCart(product)}>

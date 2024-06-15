@@ -3,6 +3,7 @@ import { NavLink, useParams } from 'react-router-dom'
 import Loading from '../../components/loading/loading'
 import { Context } from '../../context/langContext'
 import useFetchData from '../../hooks/useFetchers'
+import useTelegramTheme from '../../hooks/useTelegramTheme'
 
 interface CategoryData {
     data: {
@@ -13,6 +14,7 @@ interface CategoryData {
 function CategoriesChildren() {
 
     const langContext = useContext(Context)
+    const theme = useTelegramTheme()
 
     if (!langContext) {
         throw new Error('useContext must be inside a Provider with a valid value')
@@ -38,7 +40,7 @@ function CategoriesChildren() {
                     data?.data?.children?.map((item: any, index: number) => {
                         return (
                             <NavLink to={`/children_inner/${item.slug}`} key={index}>
-                                <li className='flex flex-col items-center p-[10px] gap-[5px] rounded-[10px] border-[1px] border-slate-200 cursor-pointer  duration-500 ease-in-out hover:border-[#ffa500]'>
+                                <li style={theme == 'dark' ? { backgroundColor: '#27314a', color: 'white', borderColor: '#27314a' } : {}} className='flex flex-col items-center p-[10px] gap-[5px] rounded-[10px] border-[1px] border-slate-200 cursor-pointer  duration-500 ease-in-out hover:border-[#ffa500]'>
                                     <img className='w-[100px] h-[80px]' src={item.image} alt="" />
                                     <span>{item[`title_${lang}`].length > 20 ? item[`title_${lang}`].slice(0, 20) + '...' : item[`title_${lang}`]}</span>
                                 </li>

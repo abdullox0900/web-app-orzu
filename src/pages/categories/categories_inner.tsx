@@ -6,6 +6,7 @@ import { Context } from '../../context/langContext'
 import { ShoppingCartContext } from '../../context/shoppingCartContext'
 import useFetchData from '../../hooks/useFetchers'
 import { content, ContentMap } from '../../localization/content'
+import useTelegramTheme from '../../hooks/useTelegramTheme'
 
 interface CategoryData {
     data: any
@@ -15,6 +16,7 @@ function CategoriesInner() {
 
     const langContext = useContext(Context)
     const shoppingContext = useContext(ShoppingCartContext)
+    const theme = useTelegramTheme()
 
     if (!langContext) {
         throw new Error('useContext must be inside a Provider with a valid value')
@@ -60,9 +62,9 @@ function CategoriesInner() {
                             data?.data?.map((item: any, index: number) => {
                                 return (
                                     <NavLink key={index} to={`/children_item/${item.slug}`}>
-                                        <li className='flex flex-col gap-[8px] items-start p-[10px] rounded-[10px] border-[1px] border-slate-200 cursor-pointer h-[240px] transition duration-500 ease-in-out hover:border-[#ffa500]'>
+                                        <li style={theme == 'dark' ? { backgroundColor: '#27314a', borderColor: '#27314a' } : {}} className='flex flex-col gap-[8px] items-start p-[10px] rounded-[10px] border-[1px] border-slate-200 cursor-pointer h-[240px] transition duration-500 ease-in-out hover:border-[#ffa500]'>
                                             <img className='w-[110px] h-[110px] mx-auto mb-[10px]' src={item.image} alt="" />
-                                            <div className='text-left text-[16px]'>{item[`title_${lang}`].length > 14 ? item[`title_${lang}`].slice(0, 14) + '...' : item[`title_${lang}`]}</div>
+                                            <div style={theme == 'dark' ? { color: 'white' } : {}} className='text-left text-[16px]'>{item[`title_${lang}`].length > 14 ? item[`title_${lang}`].slice(0, 14) + '...' : item[`title_${lang}`]}</div>
                                             <div className='text-[16px] text-[#ffa500]'>{`${formatUzbekSom(item.price)} ${xabarlar.som}`}</div>
                                             <span className='text-[11px] bg-[#F16736] text-white p-[4px] rounded-[5px] mb-[8px]'>{`${formatUzbekSom(item.monthly_pay)} ${xabarlar.som} * 1 oy`}</span>
                                             {/* <button className='flex flex-col items-center justify-center text-[18px] w-full h-[40px] text-green-500 border-[1px] border-green-500 rounded-[8px]' onClick={() => addToCart(item)}>
