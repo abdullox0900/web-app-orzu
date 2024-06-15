@@ -39,6 +39,43 @@ function Basket() {
         return numbers.reduce((total, num) => total + num.price, 0)
     }
 
+    const sendMessageToBot = async (message: string) => {
+        const botToken = 'YOUR_BOT_TOKEN'  // Bu yerga o'z bot tokeningizni qo'ying
+        const chatId = 'YOUR_CHAT_ID'  // Bu yerga chat id ni qo'ying, masalan, @username yoki chat ID
+
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage`
+
+        const payload = {
+            chat_id: chatId,
+            text: message,
+        }
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            })
+
+            const data = await response.json()
+            if (data.ok) {
+                console.log('Message sent successfully')
+                window.Telegram.WebApp.close()
+            } else {
+                console.error('Error sending message', data)
+            }
+        } catch (error) {
+            console.error('Error sending message', error)
+        }
+    }
+
+    const handleButtonClick = () => {
+        const message = 'Hello from the Telegram Web App!'
+        sendMessageToBot(message)
+    }
+
     return (
         <>
             {
@@ -73,7 +110,7 @@ function Basket() {
                         </ul>
                         <div style={theme == 'dark' ? { backgroundColor: '#27314a', borderColor: '#27314a' } : {}} className='fixed w-full bg-white bottom-0 left-0 border-t-[1px] border-slate-200'>
                             <div style={theme == 'dark' ? { color: 'white' } : {}} className='py-[15px] px-[20px] text-[20px]'>Jami: <span className='text-[18px] text-[#ffa500]'>{`${formatUzbekSom(sum(cartItems))} ${xabarlar.som}`}</span></div>
-                            <button className="w-full bg-orange-500 px-[20px] py-[15px] text-white">
+                            <button className="w-full bg-orange-500 px-[20px] py-[15px] text-white" onChange={handleButtonClick}>
                                 Sotib olish
                             </button>
                         </div>
