@@ -8,9 +8,16 @@ import CategoriesItem from './pages/categories/categories_item'
 import NotFound from './pages/not_found/not_found'
 
 import './App.css'
+import useTelegramTheme from './hooks/useTelegramTheme'
 
 
 function App() {
+
+  const theme = useTelegramTheme()
+
+  if (theme == 'dark') {
+    document.body.style.backgroundColor = '#151a28'
+  }
 
 
   return (
