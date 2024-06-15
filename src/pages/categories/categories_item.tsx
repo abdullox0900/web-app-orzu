@@ -61,7 +61,7 @@ function CategoriesItem() {
                     product.images.map((item: any, index: number) => {
                         return (
                             <SwiperSlide key={index}>
-                                <img className='w-full h-[500px] object-content' src={item.image} alt="" />
+                                <img className='w-full h-[350px] object-cover' src={item.image} alt="" />
                             </SwiperSlide>
                         )
                     })

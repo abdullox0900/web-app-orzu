@@ -3,6 +3,8 @@ import { NavLink } from 'react-router-dom'
 import Loading from '../../components/loading/loading'
 import { Context } from '../../context/langContext'
 import useFetchData from '../../hooks/useFetchers'
+import useTelegramTheme from '../../hooks/useTelegramTheme'
+
 interface CategoryData {
     data: any
 }
@@ -10,6 +12,8 @@ interface CategoryData {
 function Categories() {
 
     const langContext = useContext(Context)
+    const theme = useTelegramTheme()
+
 
     if (!langContext) {
         throw new Error('useContext must be inside a Provider with a valid value')
@@ -28,7 +32,7 @@ function Categories() {
                     data?.data?.map((item: any, index: number) => {
                         return (
                             <NavLink to={`children/${item.slug}`} key={index}>
-                                <li className='flex items-center p-[10px] gap-[5px] rounded-[10px] border-[1px] border-slate-200 cursor-pointer'>
+                                <li style={theme == 'dark' ? { color: 'white' } : { color: '' }} className='flex items-center p-[10px] gap-[5px] rounded-[10px] border-[1px] border-slate-200 cursor-pointer'>
                                     <img className='w-[35px] h-[35px]' src={item.image} alt="" />
                                     <span>{item[`title_${lang}`]}</span>
                                 </li>
