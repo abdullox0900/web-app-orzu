@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { MdDeleteOutline } from "react-icons/md"
 import { NavLink } from 'react-router-dom'
 import { Buy } from '../../assets/ilustrations'
@@ -39,15 +39,27 @@ function Basket() {
         return numbers.reduce((total, num) => total + num.price, 0)
     }
 
-    const sendMessageToBot = async (message: string) => {
-        const botToken = 'YOUR_BOT_TOKEN'  // Bu yerga o'z bot tokeningizni qo'ying
-        const chatId = 'YOUR_CHAT_ID'  // Bu yerga chat id ni qo'ying, masalan, @username yoki chat ID
+    function productSlugs(data: any) {
+        return data.map((item: any) => item.slug)
+    }
+
+    const [chatId, setChatId] = useState<string | null>(null)
+
+    useEffect(() => {
+        const tg = window.Telegram.WebApp
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            setChatId(tg.initDataUnsafe.user.id)
+        }
+    }, [])
+
+    const sendMessageToBot = async (data: any[]) => {
+        const botToken = '6247211570:AAHvObLvBcJRuMs27cONqiTTQB1vz9P2Tn0'  // Bu yerga o'z bot tokeningizni qo'ying
 
         const url = `https://api.telegram.org/bot${botToken}/sendMessage`
 
         const payload = {
             chat_id: chatId,
-            text: message,
+            text: JSON.stringify(data),
         }
 
         try {
@@ -72,8 +84,7 @@ function Basket() {
     }
 
     const handleButtonClick = () => {
-        const message = 'Hello from the Telegram Web App!'
-        sendMessageToBot(message)
+        sendMessageToBot(productSlugs(cartItems))
     }
 
     return (
@@ -110,7 +121,7 @@ function Basket() {
                         </ul>
                         <div style={theme == 'dark' ? { backgroundColor: '#27314a', borderColor: '#27314a' } : {}} className='fixed w-full bg-white bottom-0 left-0 border-t-[1px] border-slate-200'>
                             <div style={theme == 'dark' ? { color: 'white' } : {}} className='py-[15px] px-[20px] text-[20px]'>Jami: <span className='text-[18px] text-[#ffa500]'>{`${formatUzbekSom(sum(cartItems))} ${xabarlar.som}`}</span></div>
-                            <button className="w-full bg-orange-500 px-[20px] py-[15px] text-white">
+                            <button className="w-full bg-orange-500 px-[20px] py-[15px] text-white" onClick={handleButtonClick}>
                                 Sotib olish
                             </button>
                         </div>
