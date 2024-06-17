@@ -1,9 +1,11 @@
 import { useContext } from 'react'
+import { FaArrowLeft } from "react-icons/fa"
 import { NavLink, useParams } from 'react-router-dom'
 import Loading from '../../components/loading/loading'
 import { Context } from '../../context/langContext'
 import useFetchData from '../../hooks/useFetchers'
 import useTelegramTheme from '../../hooks/useTelegramTheme'
+
 
 interface CategoryData {
     data: {
@@ -35,7 +37,10 @@ function CategoriesChildren() {
 
     return (
         <>
-            <ul className='grid grid-cols-2 gap-4 px-[20px] py-[20px]'>
+            <NavLink to={'/'} style={theme == 'dark' ? { backgroundColor: '#27314a', color: 'white', borderColor: '#27314a' } : {}} className="flex items-center justify-center w-[40px] h-[40px] border-[1px] border-slate-200 rounded-full m-[20px]">
+                <FaArrowLeft />
+            </NavLink>
+            <ul className='grid grid-cols-2 gap-4 px-[20px] pb-[20px]'>
                 {
                     data?.data?.children?.map((item: any, index: number) => {
                         return (
