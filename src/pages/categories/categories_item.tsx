@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { GrDeliver } from "react-icons/gr"
 import { SlBasket } from 'react-icons/sl'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Swiper, SwiperSlide } from "swiper/react"
 import Loading from '../../components/loading/loading'
 import { Context } from '../../context/langContext'
@@ -11,6 +11,7 @@ import { content, ContentMap } from '../../localization/content'
 
 import "swiper/css"
 import useTelegramTheme from '../../hooks/useTelegramTheme'
+import { FaArrowLeft } from 'react-icons/fa'
 
 interface CategoryData {
     data: any
@@ -21,7 +22,12 @@ function CategoriesItem() {
     const shoppingContext = useContext(ShoppingCartContext)
     const langContext = useContext(Context)
     const theme = useTelegramTheme()
+    const navigate = useNavigate()
     const { slug } = useParams()
+
+    const goBack = () => {
+        navigate(-1) // Bu oldingi sahifaga qaytaradi
+    }
 
     const { data, loading, error } = useFetchData<CategoryData>(`https://app.orzugrand.uz/api/frontend/products/view/${slug}`)
 
@@ -55,6 +61,9 @@ function CategoriesItem() {
 
     return (
         <section className='p-[20px]'>
+            <button onClick={goBack} style={theme == 'dark' ? { backgroundColor: '#27314a', color: 'white', borderColor: '#27314a' } : {}} className="flex items-center justify-center w-[40px] h-[40px] border-[1px] border-slate-200 rounded-full mb-[25px]">
+                <FaArrowLeft />
+            </button>
             <Swiper className="mySwiper mb-[25px]">
                 {
                     product.images.map((item: any, index: number) => {
