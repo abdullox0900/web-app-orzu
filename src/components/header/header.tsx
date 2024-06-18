@@ -31,7 +31,7 @@ function Header() {
 
 
     return (
-        <header style={theme == 'dark' ? { borderBottomColor: '#27314a' } : { borderBottomColor: '#eeeeee' }} className='flex items-center justify-between p-[20px] border-b-[1px] border-slate-200'>
+        <header style={theme == 'dark' ? { borderBottomColor: '#27314a' } : { borderBottomColor: '#eeeeee' }} className='flex fixed top-0 left-0 w-full bg-white z-10 items-center justify-between p-[20px] border-b-[1px] border-slate-200'>
             <NavLink to="/">
                 <img src={ImgSiteLogo} alt="" width={150} height={150} />
             </NavLink>

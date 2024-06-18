@@ -27,7 +27,7 @@ function Categories() {
 
     return (
         <>
-            <ul className='flex flex-col gap-[15px] px-[20px] py-[20px]'>
+            <ul className='flex flex-col gap-[15px] px-[20px] pb-[20px]'>
                 {
                     data?.data?.map((item: any, index: number) => {
                         return (
