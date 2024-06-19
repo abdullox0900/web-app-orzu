@@ -9,14 +9,16 @@ import { ShoppingCartContext } from '../../context/shoppingCartContext'
 import useFetchData from '../../hooks/useFetchers'
 import { content, ContentMap } from '../../localization/content'
 
-import { message } from 'antd'
+import type { NotificationArgsProps } from 'antd'
+import { notification } from 'antd'
 import { FaArrowLeft } from 'react-icons/fa'
 import "swiper/css"
 import useTelegramTheme from '../../hooks/useTelegramTheme'
-
 interface CategoryData {
     data: any
 }
+
+type NotificationPlacement = NotificationArgsProps['placement']
 
 function CategoriesItem() {
 
@@ -25,13 +27,11 @@ function CategoriesItem() {
     const theme = useTelegramTheme()
     const navigate = useNavigate()
     const { slug } = useParams()
-    const [messageApi, contextHolder] = message.useMessage()
+    const [api, contextHolder] = notification.useNotification()
 
     const goBack = () => {
         navigate(-1) // Bu oldingi sahifaga qaytaradi
     }
-
-
 
     const { data, loading, error } = useFetchData<CategoryData>(`https://app.orzugrand.uz/api/frontend/products/view/${slug}`)
 
@@ -59,10 +59,10 @@ function CategoriesItem() {
 
     const xabarlar = content[lang as keyof ContentMap]
 
-    const success = () => {
-        messageApi.open({
-            type: 'success',
-            content: `${xabarlar.notification}`,
+    const openNotification = (placement: NotificationPlacement) => {
+        api.success({
+            message: `${xabarlar.notification}`,
+            placement,
         })
     }
 
@@ -71,7 +71,7 @@ function CategoriesItem() {
     }
 
     return (
-        <section className='p-[20px] pt-0'>
+        <section className='p-[20px] py-0'>
             {contextHolder}
             <button onClick={goBack} style={theme == 'dark' ? { backgroundColor: '#27314a', color: 'white', borderColor: '#27314a' } : {}} className="flex items-center justify-center w-[40px] h-[40px] border-[1px] border-slate-200 rounded-full mb-[25px]">
                 <FaArrowLeft />
@@ -101,12 +101,12 @@ function CategoriesItem() {
                 <div style={theme == 'dark' ? { color: 'white' } : {}} className='text-[22px] mb-[5px]'>Tavsifi</div>
                 <p className='text-[14px] text-[#999]'>{product[`description_${lang}`]}</p>
             </div>
-            <div style={theme == 'dark' ? { backgroundColor: '#27314a', borderColor: '#27314a' } : {}} className='fixed flex items-center justify-between px-[20px] bottom-0 left-0 w-full h-[60px] bg-white border-t-[1px] border-slate-200'>
+            <div style={theme == 'dark' ? { backgroundColor: '#27314a', borderColor: '#27314a' } : {}} className='flex items-center justify-between  bottom-0 left-0 w-full h-[60px] bg-white border-t-[1px] border-slate-200'>
                 <div className='text-[22px] font-bold text-[#ffa500]'>{`${formatUzbekSom(product.price)} ${xabarlar.som}`}</div>
 
                 <button className='flex flex-col items-center justify-center text-[18px] w-[100px] h-[40px] text-green-500 border-[1px] border-green-500 rounded-[8px]' onClick={() => {
                     addToCart(product)
-                    success()
+                    openNotification('bottomRight')
                 }}>
                     <SlBasket />
                 </button>
