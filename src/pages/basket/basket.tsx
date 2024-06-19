@@ -91,7 +91,7 @@ function Basket() {
 
     const handleButtonClick = () => {
         sendMessage()
-        sendMessageToBot(productSlugs(cartItems))
+        // sendMessageToBot(productSlugs(cartItems))
     }
 
     return (
