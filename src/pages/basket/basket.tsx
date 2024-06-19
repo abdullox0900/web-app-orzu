@@ -55,7 +55,7 @@ function Basket() {
     const sendMessageToBot = async (data: any) => {
         const botToken = '6247211570:AAHvObLvBcJRuMs27cONqiTTQB1vz9P2Tn0'  // Bu yerga o'z bot tokeningizni qo'ying
 
-        const url = `https://api.telegram.org/bot${botToken}/sendMessage`
+        const url = `https://api.telegram.org/bot${botToken}/sendToBot`
 
         const payload = {
             chat_id: chatId,
