@@ -53,6 +53,11 @@ function Basket() {
         }
     }, [])
 
+    const sendMessage = () => {
+        // Telegram Web App orqali ma'lumotni yuborish
+        window.Telegram.WebApp.sendData('salom')
+    }
+
     const sendMessageToBot = async (data: any) => {
         const botToken = '6247211570:AAHvObLvBcJRuMs27cONqiTTQB1vz9P2Tn0'  // Bu yerga o'z bot tokeningizni qo'ying
 
@@ -85,6 +90,7 @@ function Basket() {
     }
 
     const handleButtonClick = () => {
+        sendMessage()
         sendMessageToBot(productSlugs(cartItems))
     }
 
