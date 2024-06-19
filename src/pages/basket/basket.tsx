@@ -47,6 +47,7 @@ function Basket() {
 
     useEffect(() => {
         const tg = window.Telegram.WebApp
+        tg.MainButton.text = "Changed Text"
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             setChatId(tg.initDataUnsafe.user.id)
         }
@@ -55,7 +56,7 @@ function Basket() {
     const sendMessageToBot = async (data: any) => {
         const botToken = '6247211570:AAHvObLvBcJRuMs27cONqiTTQB1vz9P2Tn0'  // Bu yerga o'z bot tokeningizni qo'ying
 
-        const url = `https://api.telegram.org/bot${botToken}/sendToBot`
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage`
 
         const payload = {
             chat_id: chatId,
