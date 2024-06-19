@@ -71,7 +71,7 @@ function CategoriesItem() {
     }
 
     return (
-        <section className='p-[20px] py-0'>
+        <section className='p-[20px] py-0 pb-0 relative'>
             {contextHolder}
             <button onClick={goBack} style={theme == 'dark' ? { backgroundColor: '#27314a', color: 'white', borderColor: '#27314a' } : {}} className="flex items-center justify-center w-[40px] h-[40px] border-[1px] border-slate-200 rounded-full mb-[25px]">
                 <FaArrowLeft />
@@ -88,7 +88,7 @@ function CategoriesItem() {
                 }
 
             </Swiper>
-            <div className='flex flex-col gap-[10px] items-start mb-[70px]'>
+            <div className='flex flex-col gap-[10px] items-start'>
                 <div style={theme == 'dark' ? { color: 'white' } : {}} className='text-[18px]'>{product[`title_${lang}`]}</div>
                 <div className='text-[18px] text-[#ffa500]'>{`${formatUzbekSom(product.price)} ${xabarlar.som}`}</div>
                 <span className='text-[12px] bg-[#F16736] text-white p-[4px] rounded-[5px]'>{`${formatUzbekSom(product.monthly_pay)} ${xabarlar.som} * 1 oy`}</span>
@@ -99,9 +99,9 @@ function CategoriesItem() {
                 </div>
 
                 <div style={theme == 'dark' ? { color: 'white' } : {}} className='text-[22px] mb-[5px]'>Tavsifi</div>
-                <p className='text-[14px] text-[#999]'>{product[`description_${lang}`]}</p>
+                <p className='text-[14px] text-[#999] mb-[100px]'>{product[`description_${lang}`]}</p>
             </div>
-            <div style={theme == 'dark' ? { backgroundColor: '#27314a', borderColor: '#27314a' } : {}} className='flex items-center justify-between  bottom-0 left-0 w-full h-[60px] bg-white border-t-[1px] border-slate-200'>
+            <div style={theme == 'dark' ? { backgroundColor: '#27314a', borderColor: '#27314a' } : {}} className='flex items-center justify-between absolute px-[20px] bottom-0 left-0 w-full h-[60px] bg-white border-t-[1px] border-slate-200'>
                 <div className='text-[22px] font-bold text-[#ffa500]'>{`${formatUzbekSom(product.price)} ${xabarlar.som}`}</div>
 
                 <button className='flex flex-col items-center justify-center text-[18px] w-[100px] h-[40px] text-green-500 border-[1px] border-green-500 rounded-[8px]' onClick={() => {
