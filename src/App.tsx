@@ -9,6 +9,7 @@ import NotFound from './pages/not_found/not_found'
 
 import './App.css'
 import useTelegramTheme from './hooks/useTelegramTheme'
+import Questions from './pages/questions/questions'
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="children_inner/:slug" element={<CategoriesInner />} />
         <Route path="children_item/:slug" element={<CategoriesItem />} />
         <Route path="basket" element={<Basket />} />
+        <Route path="question" element={<Questions />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
