@@ -28,7 +28,7 @@ const Form: React.FC = () => {
     }
 
     const { lang } = langContext
-    const { cartItems } = context
+    const { cartItems, clearCart } = context
 
     const contents = content[lang as keyof ContentMap]
 
@@ -89,7 +89,10 @@ const Form: React.FC = () => {
 
         axios.post('https://web.app.orzugrand.uz/api/setAnswer', submissionData)
             .then(response => {
-                window.Telegram.WebApp.close()
+                if (response.status == 200) {
+                    window.Telegram.WebApp.close()
+                    clearCart()
+                }
                 console.log('Form submitted successfully:', response.data)
             })
             .catch(error => {
@@ -129,7 +132,7 @@ const Form: React.FC = () => {
                     {renderInputField(field)}
                 </div>
             ))}
-            <button type="submit" className="fixed bottom-0 left-0 w-full text-center bg-orange-500 px-[20px] py-[15px] text-white">{contents.submit}</button>
+            <button type="submit" className="w-full text-center bg-orange-500 px-[20px] py-[15px] text-white rounded-[10px]">{contents.submit}</button>
         </form>
     )
 }
