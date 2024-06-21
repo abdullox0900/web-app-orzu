@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { MdDeleteOutline } from "react-icons/md"
 import { NavLink } from 'react-router-dom'
 import { Buy } from '../../assets/ilustrations'
@@ -39,60 +39,56 @@ function Basket() {
         return numbers.reduce((total, num) => total + num.price, 0)
     }
 
-    function productSlugs(data: any) {
-        return data.map((item: any) => item.slug).join(' ')
-    }
+    // const [chatId, setChatId] = useState<string | null>(null)
 
-    const [chatId, setChatId] = useState<string | null>(null)
+    // useEffect(() => {
+    //     const tg = window.Telegram.WebApp
+    //     tg.MainButton.text = "Changed Text"
+    //     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+    //         setChatId(tg.initDataUnsafe.user.id)
+    //     }
+    // }, [])
 
-    useEffect(() => {
-        const tg = window.Telegram.WebApp
-        tg.MainButton.text = "Changed Text"
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            setChatId(tg.initDataUnsafe.user.id)
-        }
-    }, [])
+    // const sendMessage = () => {
+    //     // Telegram Web App orqali ma'lumotni yuborish
+    //     window.Telegram.WebApp.sendData('salom')
+    // }
 
-    const sendMessage = () => {
-        // Telegram Web App orqali ma'lumotni yuborish
-        window.Telegram.WebApp.sendData('salom')
-    }
+    // const sendMessageToBot = async (data: any) => {
+    //     const botToken = '6247211570:AAHvObLvBcJRuMs27cONqiTTQB1vz9P2Tn0'  // Bu yerga o'z bot tokeningizni qo'ying
 
-    const sendMessageToBot = async (data: any) => {
-        const botToken = '6247211570:AAHvObLvBcJRuMs27cONqiTTQB1vz9P2Tn0'  // Bu yerga o'z bot tokeningizni qo'ying
+    //     const url = `https://api.telegram.org/bot${botToken}/sendMessage`
 
-        const url = `https://api.telegram.org/bot${botToken}/sendMessage`
+    //     const payload = {
+    //         chat_id: chatId,
+    //         text: JSON.stringify(data),
+    //     }
 
-        const payload = {
-            chat_id: chatId,
-            text: JSON.stringify(data),
-        }
+    //     try {
+    //         const response = await fetch(url, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(payload),
+    //         })
 
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload),
-            })
+    //         const data = await response.json()
+    //         if (data.ok) {
+    //             console.log('Message sent successfully')
+    //             window.Telegram.WebApp.close()
+    //         } else {
+    //             console.error('Error sending message', data)
+    //         }
+    //     } catch (error) {
+    //         console.error('Error sending message', error)
+    //     }
+    // }
 
-            const data = await response.json()
-            if (data.ok) {
-                console.log('Message sent successfully')
-                window.Telegram.WebApp.close()
-            } else {
-                console.error('Error sending message', data)
-            }
-        } catch (error) {
-            console.error('Error sending message', error)
-        }
-    }
-
-    const handleButtonClick = () => {
-        sendMessage()
-        // sendMessageToBot(productSlugs(cartItems))
-    }
+    // const handleButtonClick = () => {
+    //     sendMessage()
+    //     // sendMessageToBot(productSlugs(cartItems))
+    // }
 
     return (
         <>

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../../context/langContext'
+import { ShoppingCartContext } from '../../context/shoppingCartContext'
 import { content, ContentMap } from '../../localization/content'
 
 interface FormField {
@@ -15,14 +16,30 @@ const Form: React.FC = () => {
     const [formData, setFormData] = useState<{ [key: number]: any }>({})
 
     const langContext = useContext(Context)
+    const context = useContext(ShoppingCartContext)
+
+    if (!context) {
+        throw new Error('useContext must be inside a Provider with a valid value')
+    }
 
     if (!langContext) {
         throw new Error('useContext must be inside a Provider with a valid value')
     }
 
     const { lang } = langContext
+    const { cartItems } = context
 
     const contents = content[lang as keyof ContentMap]
+
+    const [chatId, setChatId] = useState<string | null>(null)
+
+    useEffect(() => {
+        const tg = window.Telegram.WebApp
+        tg.MainButton.text = "Changed Text"
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            setChatId(tg.initDataUnsafe.user.id)
+        }
+    }, [])
 
 
     useEffect(() => {
@@ -47,16 +64,25 @@ const Form: React.FC = () => {
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
-        const submissionData = {
-            chat_id: 5997114437,
-            answers: fields.map(field => ({
+        const answers = cartItems.map(item => ({
+            question_id: item.id,
+            answer: item.slug
+        })).concat(
+            fields.map(field => ({
                 question_id: field.id,
-                question_value: formData[field.id]
+                answer: formData[field.id]
             }))
-        }
-        console.log('Form data submitted:', submissionData)
+        )
 
-        fetch('http://web.app.orzugrand.uz/api/setAnswer', {
+        const submissionData = {
+            chat_id: chatId,
+            answers: answers
+        }
+
+        console.log(submissionData)
+
+
+        fetch('https://web.app.orzugrand.uz/api/setAnswer', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -98,9 +124,9 @@ const Form: React.FC = () => {
 
     return (
         <form onSubmit={handleSubmit} className='flex flex-col gap-[20px] p-[20px]'>
-            {fields.map(field => (
+            {fields.slice(1).map(field => (
                 <div key={field.id} className='flex flex-col gap-[5px]'>
-                    <label className='text-gray-500 text-[14px]' dangerouslySetInnerHTML={{ __html: field[`title_${lang}`] }}></label>
+                    <label className='text-gray-500 text-[14px]' dangerouslySetInnerHTML={{ __html: field.title_uz }}></label>
                     {renderInputField(field)}
                 </div>
             ))}
