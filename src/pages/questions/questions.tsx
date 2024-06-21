@@ -8,7 +8,7 @@ interface CategoryData {
 
 function Questions() {
 
-    const { loading, error } = useFetchData<CategoryData>(`https://web.app.orzugrand.uz/api/questions`)
+    const { loading, error } = useFetchData<CategoryData>(`https://shop-bot.orzugrand.uz/api/questions`)
 
     if (loading) return <Loading />
     if (error) return <div>Xato: {error}</div>

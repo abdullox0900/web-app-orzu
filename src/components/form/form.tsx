@@ -45,7 +45,8 @@ const Form: React.FC = () => {
 
     useEffect(() => {
         // API ma'lumotlarini olish
-        fetch('https://web.app.orzugrand.uz/api/questions')
+        https://shop-bot.orzugrand.uz/
+        fetch('https://shop-bot.orzugrand.uz/api/questions')
             .then(response => response.json())
             .then(data => {
                 setFields(data)
@@ -87,7 +88,7 @@ const Form: React.FC = () => {
         const jsonData = JSON.stringify(submissionData)
         console.log(jsonData)
 
-        axios.post('https://web.app.orzugrand.uz/api/setAnswer', submissionData)
+        axios.post('https://shop-bot.orzugrand.uz/api/setAnswer', submissionData)
             .then(response => {
                 if (response.status == 200) {
                     window.Telegram.WebApp.close()
