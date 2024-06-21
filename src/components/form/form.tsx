@@ -78,7 +78,7 @@ const Form: React.FC = () => {
         }
 
         const submissionData = {
-            chat_id: 5997114437,
+            chat_id: chatId,
             answers: answers
         }
 
