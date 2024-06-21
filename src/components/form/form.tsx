@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../../context/langContext'
 import { content, ContentMap } from '../../localization/content'
 
@@ -100,7 +100,7 @@ const Form: React.FC = () => {
         <form onSubmit={handleSubmit} className='flex flex-col gap-[20px] p-[20px]'>
             {fields.map(field => (
                 <div key={field.id} className='flex flex-col gap-[5px]'>
-                    <label className='text-gray-500 text-[14px]'>{field[`title_${lang}`]}</label>
+                    <label className='text-gray-500 text-[14px]' dangerouslySetInnerHTML={{ __html: field[`title_${lang}`] }}></label>
                     {renderInputField(field)}
                 </div>
             ))}
