@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../../context/langContext'
 import { ShoppingCartContext } from '../../context/shoppingCartContext'
@@ -64,34 +65,32 @@ const Form: React.FC = () => {
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
-        const answers = cartItems.map(item => ({
-            question_id: item.id,
-            answer: item.slug
-        })).concat(
-            fields.map(field => ({
-                question_id: field.id,
-                answer: formData[field.id]
-            }))
-        )
+        const cartSlugs = cartItems.map(item => item.slug)
+
+        const answers = {
+            ...fields.map(field => {
+                if (field.id === 11) {
+                    return { question_id: 11, answer: cartSlugs.join(' ') }
+                } else {
+                    return { question_id: field.id, answer: formData[field.id] }
+                }
+            })
+        }
 
         const submissionData = {
-            chat_id: chatId,
+            chat_id: 5997114437,
             answers: answers
         }
 
         console.log(submissionData)
 
+        const jsonData = JSON.stringify(submissionData)
+        console.log(jsonData)
 
-        fetch('https://web.app.orzugrand.uz/api/setAnswer', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(submissionData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Form submitted successfully:', data)
+        axios.post('https://web.app.orzugrand.uz/api/setAnswer', submissionData)
+            .then(response => {
+                window.Telegram.WebApp.close()
+                console.log('Form submitted successfully:', response.data)
             })
             .catch(error => {
                 console.error('Error submitting form:', error)
