@@ -88,7 +88,9 @@ const Form: React.FC = () => {
         const jsonData = JSON.stringify(submissionData)
         console.log(jsonData)
 
-        axios.post('https://shop-bot.orzugrand.uz/api/setAnswer', submissionData)
+        axios.post('https://shop-bot.orzugrand.uz/api/setAnswer', submissionData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
             .then(response => {
                 if (response.status == 200) {
                     window.Telegram.WebApp.close()
