@@ -135,7 +135,7 @@ const Form: React.FC = () => {
                     {renderInputField(field)}
                 </div>
             ))}
-            <button type="submit" className="w-full text-center bg-orange-500 px-[20px] py-[15px] text-white rounded-[10px]">
+            <button disabled={loading} type="submit" className="w-full text-center bg-orange-500 px-[20px] py-[15px] text-white rounded-[10px]">
                 {loading ? contents.laoding : contents.submit}
             </button>
         </form>
