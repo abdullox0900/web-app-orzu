@@ -10,6 +10,7 @@ export interface ContentMap {
 		no_product: string
 		notification: string
 		submit: string
+		laoding: string
 		// Boshqa kerakli xususiyatlar
 	}
 	uzc: {
@@ -23,6 +24,7 @@ export interface ContentMap {
 		no_product: string
 		notification: string
 		submit: string
+		laoding: string
 		// Boshqa kerakli xususiyatlar
 	}
 	ru: {
@@ -36,6 +38,7 @@ export interface ContentMap {
 		no_product: string
 		notification: string
 		submit: string
+		laoding: string
 		// Boshqa kerakli xususiyatlar
 	}
 }
@@ -52,6 +55,7 @@ export const content: ContentMap = {
 		all: 'Jami:',
 		notification: "Mahsulot savatchangizga qo'shildi.",
 		submit: 'Yuborish',
+		laoding: 'Yuborilmoqda...'
 	},
 	uzc: {
 		buy: 'Сотиб олиш',
@@ -64,6 +68,7 @@ export const content: ContentMap = {
 		all: 'Жами:',
 		notification: 'Маҳсулот саватчангизга қўшилди.',
 		submit: 'Юбориш',
+		laoding: 'Юборилмоқда...'
 	},
 	ru: {
 		buy: 'Купить',
@@ -76,5 +81,6 @@ export const content: ContentMap = {
 		all: 'Итого:',
 		notification: 'Товар помещен в вашу корзину.',
 		submit: 'Отправить',
+		laoding: 'Отправляется...'
 	},
 }

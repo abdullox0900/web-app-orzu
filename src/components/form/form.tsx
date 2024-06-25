@@ -15,6 +15,7 @@ const Form: React.FC = () => {
 
     const [fields, setFields] = useState<FormField[]>([])
     const [formData, setFormData] = useState<{ [key: number]: any }>({})
+    const [loading, setLoading] = useState<boolean>(false)
 
     const langContext = useContext(Context)
     const context = useContext(ShoppingCartContext)
@@ -66,6 +67,7 @@ const Form: React.FC = () => {
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
+        setLoading(true)
         const cartSlugs = cartItems.map(item => item.slug)
 
         const answers = {
@@ -83,14 +85,9 @@ const Form: React.FC = () => {
             answers: answers
         }
 
-        console.log(submissionData)
-
-        const jsonData = JSON.stringify(submissionData)
-        console.log(jsonData)
-
         axios.post('https://shop-bot.orzugrand.uz/api/setAnswer', submissionData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
+            headers: { "Content-Type": "multipart/form-data" }
+        })
             .then(response => {
                 if (response.status == 200) {
                     window.Telegram.WebApp.close()
@@ -100,6 +97,9 @@ const Form: React.FC = () => {
             })
             .catch(error => {
                 console.error('Error submitting form:', error)
+            })
+            .finally(() => {
+                setLoading(false)
             })
     }
 
@@ -135,7 +135,9 @@ const Form: React.FC = () => {
                     {renderInputField(field)}
                 </div>
             ))}
-            <button type="submit" className="w-full text-center bg-orange-500 px-[20px] py-[15px] text-white rounded-[10px]">{contents.submit}</button>
+            <button disabled={loading} type="submit" className="w-full text-center bg-orange-500 px-[20px] py-[15px] text-white rounded-[10px]">
+                {loading ? contents.laoding : contents.submit}
+            </button>
         </form>
     )
 }
