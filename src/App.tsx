@@ -11,7 +11,6 @@ import './App.css'
 import useTelegramTheme from './hooks/useTelegramTheme'
 import Questions from './pages/questions/questions'
 
-
 function App() {
 
   const theme = useTelegramTheme()
