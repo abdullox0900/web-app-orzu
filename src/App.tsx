@@ -1,24 +1,26 @@
-import { Route, Routes } from 'react-router-dom'
-import Header from './components/header/header'
+import { Route, Routes } from 'react-router-dom' // Import React router-dom 
+
+// Import Pages
 import Basket from './pages/basket/basket'
 import Categories from './pages/categories/categories'
 import CategoriesChildren from './pages/categories/categories_children'
 import CategoriesInner from './pages/categories/categories_inner'
 import CategoriesItem from './pages/categories/categories_item'
 import NotFound from './pages/not_found/not_found'
-
-import './App.css'
-import useTelegramTheme from './hooks/useTelegramTheme'
 import Questions from './pages/questions/questions'
+
+// Import Components
+import Header from './components/header/header'
+
+import './App.css' // Importing CSS file for styling
+
+import useTelegramTheme from './hooks/useTelegramTheme' // Import Telegram Theme Hook
 
 function App() {
 
   const theme = useTelegramTheme()
 
-  if (theme == 'dark') {
-    document.body.style.backgroundColor = '#151a28'
-  }
-
+  document.body.className = theme === 'dark' ? 'dark-theme' : 'light-theme'
 
   return (
     <div>

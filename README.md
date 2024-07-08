@@ -123,7 +123,3 @@
 - React Router
 - Tailwind CSS
 - Интеграция с Telegram
-
-```
-
-```

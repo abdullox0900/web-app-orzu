@@ -1,9 +1,10 @@
-import axios from 'axios'
-import React, { useContext, useEffect, useState } from 'react'
-import { Context } from '../../context/langContext'
-import { ShoppingCartContext } from '../../context/shoppingCartContext'
-import { content, ContentMap } from '../../localization/content'
+import axios from 'axios' // Importing axios for making HTTP requests
+import React, { useContext, useEffect, useState } from 'react' // Importing React and necessary hooks
+import { Context } from '../../context/langContext' // Importing language context
+import { ShoppingCartContext } from '../../context/shoppingCartContext' // Importing shopping cart context
+import { content, ContentMap } from '../../localization/content' // Importing localization content
 
+// Defining interface for form fields
 interface FormField {
     id: number
     title_uz: string
@@ -11,15 +12,18 @@ interface FormField {
     type: string
 }
 
+// Functional component Form
 const Form: React.FC = () => {
-
+    // State variables for form fields, form data, loading state
     const [fields, setFields] = useState<FormField[]>([])
     const [formData, setFormData] = useState<{ [key: number]: any }>({})
     const [loading, setLoading] = useState<boolean>(false)
 
+    // Using language context and shopping cart context
     const langContext = useContext(Context)
     const context = useContext(ShoppingCartContext)
 
+    // Throwing error if context is not within provider
     if (!context) {
         throw new Error('useContext must be inside a Provider with a valid value')
     }
@@ -35,6 +39,7 @@ const Form: React.FC = () => {
 
     const [chatId, setChatId] = useState<string | null>(null)
 
+    // useEffect hook to initialize Telegram WebApp and set chat ID
     useEffect(() => {
         const tg = window.Telegram.WebApp
         tg.MainButton.text = "Changed Text"
@@ -43,10 +48,8 @@ const Form: React.FC = () => {
         }
     }, [])
 
-
+    // useEffect hook to fetch form fields from API
     useEffect(() => {
-        // API ma'lumotlarini olish
-        https://shop-bot.orzugrand.uz/
         fetch('https://shop-bot.orzugrand.uz/api/questions')
             .then(response => response.json())
             .then(data => {
@@ -60,11 +63,12 @@ const Form: React.FC = () => {
             .catch(error => console.error('Error fetching form fields:', error))
     }, [])
 
+    // Handler function to update form data
     const handleChange = (id: number, value: any) => {
-        console.log(setFormData({ ...formData, [id]: value }))
         setFormData({ ...formData, [id]: value })
     }
 
+    // Handler function to submit the form
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
         setLoading(true)
@@ -85,6 +89,7 @@ const Form: React.FC = () => {
             answers: answers
         }
 
+        // Posting form data to API
         axios.post('https://shop-bot.orzugrand.uz/api/setAnswer', submissionData, {
             headers: { "Content-Type": "multipart/form-data" }
         })
@@ -103,6 +108,7 @@ const Form: React.FC = () => {
             })
     }
 
+    // Function to render input fields based on their type
     const renderInputField = (field: FormField) => {
         switch (field.type) {
             case "2":
@@ -127,6 +133,7 @@ const Form: React.FC = () => {
         }
     }
 
+    // Rendering the form with input fields and submit button
     return (
         <form onSubmit={handleSubmit} className='flex flex-col gap-[20px] p-[20px]'>
             {fields.slice(1).map(field => (

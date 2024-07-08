@@ -1,17 +1,25 @@
+/* Importing Tailwind styles */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Styles for light theme */
 .App.light {
     background-color: #ffffff;
+    /* Setting background color to white */
     color: #000000;
+    /* Setting text color to black */
 }
 
+/* Styles for dark theme */
 .App.dark {
     background-color: #121212;
+    /* Setting background color to a dark shade */
     color: #ffffff;
+    /* Setting text color to white */
 }
 
 body {
     margin-top: 100px;
+    /* Adding a top margin to the body */
 }

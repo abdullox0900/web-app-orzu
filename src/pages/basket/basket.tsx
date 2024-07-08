@@ -1,16 +1,23 @@
+// Import React and React-router
 import { useContext } from 'react'
-import { MdDeleteOutline } from "react-icons/md"
 import { NavLink } from 'react-router-dom'
-import { Buy } from '../../assets/ilustrations'
-import { Context } from '../../context/langContext'
-import { ShoppingCartContext } from '../../context/shoppingCartContext'
-import useTelegramTheme from '../../hooks/useTelegramTheme'
-import { content, ContentMap } from '../../localization/content'
 
-interface Item {
-    id: number
-    price: number
-}
+// Images
+import { Buy } from '../../assets/ilustrations'
+
+// React-Icons
+import { MdDeleteOutline } from "react-icons/md"
+
+// Import Shopping Context
+import { ShoppingCartContext } from '../../context/shoppingCartContext'
+
+// Import Hook
+import useTelegramTheme from '../../hooks/useTelegramTheme'
+
+// Import Localization Content and Context
+import { Context } from '../../context/langContext'
+import { content, ContentMap } from '../../localization/content'
+import { Item } from '../../types/types'
 
 function Basket() {
 
@@ -29,7 +36,7 @@ function Basket() {
     const { lang } = langContext
     const { cartItems, removeFromCart } = context
 
-    const xabarlar = content[lang as keyof ContentMap]
+    const messages = content[lang as keyof ContentMap]
 
     function formatUzbekSom(price: number) {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
@@ -39,67 +46,16 @@ function Basket() {
         return numbers.reduce((total, num) => total + num.price, 0)
     }
 
-    // const [chatId, setChatId] = useState<string | null>(null)
-
-    // useEffect(() => {
-    //     const tg = window.Telegram.WebApp
-    //     tg.MainButton.text = "Changed Text"
-    //     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-    //         setChatId(tg.initDataUnsafe.user.id)
-    //     }
-    // }, [])
-
-    // const sendMessage = () => {
-    //     // Telegram Web App orqali ma'lumotni yuborish
-    //     window.Telegram.WebApp.sendData('salom')
-    // }
-
-    // const sendMessageToBot = async (data: any) => {
-    //     const botToken = '6247211570:AAHvObLvBcJRuMs27cONqiTTQB1vz9P2Tn0'  // Bu yerga o'z bot tokeningizni qo'ying
-
-    //     const url = `https://api.telegram.org/bot${botToken}/sendMessage`
-
-    //     const payload = {
-    //         chat_id: chatId,
-    //         text: JSON.stringify(data),
-    //     }
-
-    //     try {
-    //         const response = await fetch(url, {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify(payload),
-    //         })
-
-    //         const data = await response.json()
-    //         if (data.ok) {
-    //             console.log('Message sent successfully')
-    //             window.Telegram.WebApp.close()
-    //         } else {
-    //             console.error('Error sending message', data)
-    //         }
-    //     } catch (error) {
-    //         console.error('Error sending message', error)
-    //     }
-    // }
-
-    // const handleButtonClick = () => {
-    //     sendMessage()
-    //     // sendMessageToBot(productSlugs(cartItems))
-    // }
-
     return (
         <>
             {
                 cartItems.length == 0 ? (
                     <div className='flex flex-col items-center justify-center'>
                         <Buy />
-                        <span style={theme == 'dark' ? { color: 'white' } : {}} className='text-center text-[22px] mb-[5px]'>{xabarlar.buy1}</span>
-                        <span style={theme == 'dark' ? { color: 'white' } : {}} className='mb-[10px]'>{xabarlar.buy2}</span>
+                        <span style={theme == 'dark' ? { color: 'white' } : {}} className='text-center text-[22px] mb-[5px]'>{messages.buy1}</span>
+                        <span style={theme == 'dark' ? { color: 'white' } : {}} className='mb-[10px]'>{messages.buy2}</span>
                         <NavLink to="/" className="bg-orange-500 px-[20px] py-[10px] rounded-[10px] text-white">
-                            {xabarlar.not_found_link}
+                            {messages.not_found_link}
                         </NavLink>
                     </div>
                 ) : (
@@ -112,7 +68,7 @@ function Basket() {
                                             <img className='w-[110px] h-[110px]' src={item.images[0].image} alt="" />
                                             <div>
                                                 <div style={theme == 'dark' ? { color: 'white' } : {}}>{item[`title_${lang}`]}</div>
-                                                <div className='text-[16px] text-[#ffa500]'>{`${formatUzbekSom(item.price)} ${xabarlar.som}`}</div>
+                                                <div className='text-[16px] text-[#ffa500]'>{`${formatUzbekSom(item.price)} ${messages.som}`}</div>
                                             </div>
                                             <button className='absolute right-[20px] bottom-[20px] text-[22px] text-red-500' onClick={() => removeFromCart(item.id)}>
                                                 <MdDeleteOutline />
@@ -123,9 +79,9 @@ function Basket() {
                             }
                         </ul>
                         <div style={theme == 'dark' ? { backgroundColor: '#27314a', borderColor: '#27314a' } : {}} className='fixed w-full bg-white bottom-0 left-0 border-t-[1px] border-slate-200'>
-                            <div style={theme == 'dark' ? { color: 'white' } : {}} className='py-[15px] px-[20px] text-[20px]'>{xabarlar.all} <span className='text-[18px] text-[#ffa500]'>{`${formatUzbekSom(sum(cartItems))} ${xabarlar.som}`}</span></div>
+                            <div style={theme == 'dark' ? { color: 'white' } : {}} className='py-[15px] px-[20px] text-[20px]'>{messages.all} <span className='text-[18px] text-[#ffa500]'>{`${formatUzbekSom(sum(cartItems))} ${messages.som}`}</span></div>
                             <NavLink className="inline-block w-full text-center bg-orange-500 px-[20px] py-[15px] text-white" to='/question'>
-                                {xabarlar.buy}
+                                {messages.buy}
                             </NavLink>
                         </div>
                     </>

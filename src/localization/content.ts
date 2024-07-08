@@ -1,3 +1,4 @@
+// Defining an interface for the content map with translations for different languages
 export interface ContentMap {
 	uz: {
 		all: string
@@ -11,7 +12,6 @@ export interface ContentMap {
 		notification: string
 		submit: string
 		laoding: string
-		// Boshqa kerakli xususiyatlar
 	}
 	uzc: {
 		all: string
@@ -25,7 +25,6 @@ export interface ContentMap {
 		notification: string
 		submit: string
 		laoding: string
-		// Boshqa kerakli xususiyatlar
 	}
 	ru: {
 		all: string
@@ -39,10 +38,10 @@ export interface ContentMap {
 		notification: string
 		submit: string
 		laoding: string
-		// Boshqa kerakli xususiyatlar
 	}
 }
 
+// Defining the content object with translations for each language
 export const content: ContentMap = {
 	uz: {
 		buy: 'Sotib olish',
@@ -55,7 +54,7 @@ export const content: ContentMap = {
 		all: 'Jami:',
 		notification: "Mahsulot savatchangizga qo'shildi.",
 		submit: 'Yuborish',
-		laoding: 'Yuborilmoqda...'
+		laoding: 'Yuborilmoqda...',
 	},
 	uzc: {
 		buy: 'Сотиб олиш',
@@ -68,7 +67,7 @@ export const content: ContentMap = {
 		all: 'Жами:',
 		notification: 'Маҳсулот саватчангизга қўшилди.',
 		submit: 'Юбориш',
-		laoding: 'Юборилмоқда...'
+		laoding: 'Юборилмоқда...',
 	},
 	ru: {
 		buy: 'Купить',
@@ -81,6 +80,6 @@ export const content: ContentMap = {
 		all: 'Итого:',
 		notification: 'Товар помещен в вашу корзину.',
 		submit: 'Отправить',
-		laoding: 'Отправляется...'
+		laoding: 'Отправляется...',
 	},
 }
