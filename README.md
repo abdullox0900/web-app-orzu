@@ -2,6 +2,7 @@
 
 ## Структура проекта
 
+```markdown
 ├── README.md
 ├── components
 │ └── Editor
@@ -58,6 +59,7 @@
 ├── tsconfig.node.json
 ├── vercel.json
 └── vite.config.ts
+```
 
 ## Основные компоненты и их функции
 
@@ -121,3 +123,7 @@
 - React Router
 - Tailwind CSS
 - Интеграция с Telegram
+
+```
+
+```
