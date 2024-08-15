@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../../context/langContext'
 import { ShoppingCartContext } from '../../context/shoppingCartContext'
 import { content, ContentMap } from '../../localization/content'
+import { notification } from 'antd'
+import { useNavigate } from 'react-router-dom'
 
 interface FormField {
     id: number
@@ -12,9 +14,13 @@ interface FormField {
 }
 
 const Form: React.FC = () => {
+
+    const navigate = useNavigate()
+
     const [fields, setFields] = useState<FormField[]>([])
     const [formData, setFormData] = useState<{ [key: number]: any }>({})
     const [loading, setLoading] = useState<boolean>(false)
+    const [errors, setErrors] = useState<{ [key: number]: string }>({})
 
     const langContext = useContext(Context)
     const context = useContext(ShoppingCartContext)
@@ -39,6 +45,20 @@ const Form: React.FC = () => {
     }, [])
 
     useEffect(() => {
+		const tg = window.Telegram.WebApp
+
+		tg.BackButton.show()
+
+		tg.BackButton.onClick(() => {
+			navigate(-1)
+		})
+
+		return () => {
+			tg.BackButton.hide()
+		}
+	}, [])
+
+    useEffect(() => {
         fetch('https://shop-bot.orzugrand.uz/api/questions')
             .then(response => response.json())
             .then(data => {
@@ -48,16 +68,50 @@ const Form: React.FC = () => {
                     return acc
                 }, {})
                 setFormData(initialFormData)
+                console.log('Initial form data:', initialFormData) // Debug
             })
             .catch(error => console.error('Error fetching form fields:', error))
     }, [])
 
     const handleChange = (id: number, value: any) => {
-        setFormData({ ...formData, [id]: value })
+        setFormData(prevData => {
+            const newData = { ...prevData, [id]: value }
+            console.log('Updated form data:', newData) // Debug
+            return newData
+        })
+        if (errors[id]) {
+            setErrors(prev => ({ ...prev, [id]: '' }))
+        }
+    }
+
+    const validateForm = () => {
+        const newErrors: { [key: number]: string } = {}
+        fields.forEach(field => {
+            if (field.id !== 10 && field.id !== 4 && field.id !== 11) {
+                const value = formData[field.id]
+                console.log(`Validating field ${field.id}:`, value) // Debug
+                if (!value || (typeof value === 'string' && value.trim() === '')) {
+                    newErrors[field.id] = 'Bu maydon to\'ldirilishi shart'
+                }
+            }
+        })
+        console.log('Validation errors:', newErrors) // Debug
+        setErrors(newErrors)
+        return Object.keys(newErrors).length === 0
     }
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
+        console.log('Form data before validation:', formData) // Debug
+        if (!validateForm()) {
+            console.log('Form validation failed') // Debug
+            notification.error({
+                message: 'Xatolik',
+                description: 'Iltimos, barcha majburiy maydonlarni to\'ldiring',
+            })
+            return
+        }
+        console.log('Form validation passed') // Debug
         setLoading(true)
         const cartSlugs = cartItems.map(item => item.slug)
 
@@ -69,14 +123,13 @@ const Form: React.FC = () => {
                     month: item.selectedTerm
                 }))
 
-                // Umimiy narx va oyni hisoblas
                 const totalPrice = basketItems.reduce((sum, item) => sum + item.monthlyPayment * item.selectedTerm, 0)
                 const maxMonth = Math.max(...basketItems.map(item => item.selectedTerm))
 
                 return { 
                     question_id: 11, 
                     price: totalPrice,
-                    slugs: cartSlugs.join(' '),
+                    answer: JSON.stringify(basketItemsData),
                     month: maxMonth
                 }
             } else {
@@ -85,22 +138,33 @@ const Form: React.FC = () => {
         })
 
         const submissionData = {
-            chat_id: chatId,
+            chat_id: chatId || 6521958457,
             answers: answers
         }
+
+        console.log('Submission data:', submissionData) // Debug
 
         axios.post('https://shop-bot.orzugrand.uz/api/setAnswer', submissionData, {
             headers: { "Content-Type": "multipart/form-data" }
         })
             .then(response => {
                 if (response.status == 200) {
+                    console.log('Form submitted successfully') // Debug
+                    notification.success({
+                        message: 'Muvaffaqiyatli',
+                        description: 'Forma muvaffaqiyatli yuborildi',
+                    })
                     window.Telegram.WebApp.close()
                     clearCart()
                 }
-                console.log('Form submitted successfully:', response.data)
+                console.log('Server response:', response.data) // Debug
             })
             .catch(error => {
                 console.error('Error submitting form:', error)
+                notification.error({
+                    message: 'Xatolik',
+                    description: 'Forma yuborishda xatolik yuz berdi',
+                })
             })
             .finally(() => {
                 setLoading(false)
@@ -111,20 +175,32 @@ const Form: React.FC = () => {
         switch (field.type) {
             case "2":
                 return (
-                    <input
-                        type="text"
-                        className='border-[1px] border-slate-200 w-full p-[10px] rounded-[10px] outline-none'
-                        value={formData[field.id] || ''}
-                        onChange={(e) => handleChange(field.id, e.target.value)}
-                    />
+                    <div>
+                        <input
+                            type="text"
+                            className={`border-[1px] ${errors[field.id] ? 'border-red-500' : 'border-slate-200'} w-full p-[10px] rounded-[10px] outline-none`}
+                            value={formData[field.id] || ''}
+                            onChange={(e) => handleChange(field.id, e.target.value)}
+                        />
+                        {errors[field.id] && <p className="text-red-500 text-sm mt-1">{errors[field.id]}</p>}
+                        {(field.id === 10 || field.id === 4 || field.id === 11) && (
+                            <p className="text-gray-500 text-sm mt-1">Bu maydonni to'ldirish ixtiyoriy</p>
+                        )}
+                    </div>
                 )
             case "3":
                 return (
-                    <input
-                        type="file"
-                        className='p-[10px]'
-                        onChange={(e) => handleChange(field.id, e.target.files ? e.target.files[0] : null)}
-                    />
+                    <div>
+                        <input
+                            type="file"
+                            className={`p-[10px] ${errors[field.id] ? 'border-red-500' : ''}`}
+                            onChange={(e) => handleChange(field.id, e.target.files ? e.target.files[0] : null)}
+                        />
+                        {errors[field.id] && <p className="text-red-500 text-sm mt-1">{errors[field.id]}</p>}
+                        {(field.id === 10 || field.id === 4 || field.id === 11) && (
+                            <p className="text-gray-500 text-sm mt-1">Bu maydonni to'ldirish ixtiyoriy</p>
+                        )}
+                    </div>
                 )
             default:
                 return null

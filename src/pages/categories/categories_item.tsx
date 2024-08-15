@@ -1,4 +1,4 @@
-import { useContext } from 'react' // Importing useContext hook from React
+import { useContext, useEffect } from 'react' // Importing useContext hook from React
 import { GrDeliver } from "react-icons/gr" // Importing GrDeliver icon from react-icons
 import { SlBasket } from 'react-icons/sl' // Importing SlBasket icon from react-icons
 import { useNavigate, useParams } from 'react-router-dom' // Importing useNavigate and useParams from react-router-dom
@@ -74,6 +74,20 @@ function CategoriesItem() {
     function formatUzbekSom(price: number) {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
     }
+
+    useEffect(() => {
+		const tg = window.Telegram.WebApp
+
+		tg.BackButton.show()
+
+		tg.BackButton.onClick(() => {
+			navigate(-1)
+		})
+
+		return () => {
+			tg.BackButton.hide()
+		}
+	}, [])
 
     // Returning the product details
     return (

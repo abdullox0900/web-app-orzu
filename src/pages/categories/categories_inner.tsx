@@ -1,4 +1,4 @@
-import { useContext } from 'react' // Importing useContext hook from React
+import { useContext, useEffect } from 'react' // Importing useContext hook from React
 import { FaArrowLeft } from 'react-icons/fa' // Importing FaArrowLeft icon from react-icons
 import { NavLink, useNavigate, useParams } from 'react-router-dom' // Importing NavLink, useNavigate, and useParams from react-router-dom
 import { NoProduct } from '../../assets/ilustrations' // Importing NoProduct illustration
@@ -16,10 +16,12 @@ interface CategoryData {
 
 // Functional component CategoriesInner
 function CategoriesInner() {
+
+    const navigate = useNavigate()
+
     const langContext = useContext(Context) // Using context to access language context
     const shoppingContext = useContext(ShoppingCartContext) // Using context to access shopping cart context
     const theme = useTelegramTheme() // Getting theme from custom Telegram theme hook
-    const navigate = useNavigate() // Using useNavigate hook for navigation
 
     // Function to go back to the previous page
     const goBack = () => {
@@ -57,6 +59,20 @@ function CategoriesInner() {
     function formatUzbekSom(price: number) {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
     }
+
+    useEffect(() => {
+		const tg = window.Telegram.WebApp
+
+		tg.BackButton.show()
+
+		tg.BackButton.onClick(() => {
+			navigate(-1)
+		})
+
+		return () => {
+			tg.BackButton.hide()
+		}
+	}, [])
 
     // Returning the list of products or a no product message
     return (

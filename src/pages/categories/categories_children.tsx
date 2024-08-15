@@ -1,6 +1,6 @@
-import { useContext } from 'react' // Importing useContext hook from React
+import { useContext, useEffect } from 'react' // Importing useContext hook from React
 import { FaArrowLeft } from "react-icons/fa" // Importing FaArrowLeft icon from react-icons
-import { NavLink, useParams } from 'react-router-dom' // Importing NavLink and useParams from react-router-dom
+import { NavLink, useNavigate, useParams } from 'react-router-dom' // Importing NavLink and useParams from react-router-dom
 import Loading from '../../components/loading/loading' // Importing Loading component
 import { Context } from '../../context/langContext' // Importing language context
 import useFetchData from '../../hooks/useFetchers' // Importing custom hook to fetch data
@@ -15,6 +15,9 @@ interface CategoryData {
 
 // Functional component CategoriesChildren
 function CategoriesChildren() {
+
+    const navigate = useNavigate()
+
     // Using context to access language context
     const langContext = useContext(Context)
     const theme = useTelegramTheme() // Getting theme from custom Telegram theme hook
@@ -39,6 +42,20 @@ function CategoriesChildren() {
     if (error || !data) {
         return <div>Xatolik yuz berdi: {error}</div>
     }
+
+    useEffect(() => {
+		const tg = window.Telegram.WebApp
+
+		tg.BackButton.show()
+
+		tg.BackButton.onClick(() => {
+			navigate(-1)
+		})
+
+		return () => {
+			tg.BackButton.hide()
+		}
+	}, [])
 
     // Returning the list of category children
     return (

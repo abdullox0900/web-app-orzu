@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { Buy } from '../../assets/ilustrations'
 import { MdDeleteOutline } from "react-icons/md"
 import { ShoppingCartContext, ContextType, CartItem, BasketItem } from '../../context/shoppingCartContext'
@@ -12,6 +12,9 @@ interface LangContextType {
 }
 
 function Basket() {
+
+    const navigate = useNavigate()
+
     const context = useContext(ShoppingCartContext)
     const langContext = useContext(Context) as LangContextType
     const theme = useTelegramTheme()
@@ -59,6 +62,20 @@ function Basket() {
     function sum(items: BasketItem[]) {
         return items.reduce((total, item) => total + item.monthlyPayment * item.selectedTerm, 0);
     }
+
+    useEffect(() => {
+		const tg = window.Telegram.WebApp
+
+		tg.BackButton.show()
+
+		tg.BackButton.onClick(() => {
+			navigate(-1)
+		})
+
+		return () => {
+			tg.BackButton.hide()
+		}
+	}, [])
 
     return (
         <>

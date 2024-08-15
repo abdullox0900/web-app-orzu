@@ -1,5 +1,5 @@
-import { useContext } from 'react' // Importing useContext hook from React
-import { NavLink } from 'react-router-dom' // Importing NavLink from react-router-dom
+import { useContext,  useEffect } from 'react' // Importing useContext hook from React
+import { NavLink, useNavigate } from 'react-router-dom' // Importing NavLink from react-router-dom
 import Loading from '../../components/loading/loading' // Importing Loading component
 import { Context } from '../../context/langContext' // Importing language context
 import useFetchData from '../../hooks/useFetchers' // Importing custom hook to fetch data
@@ -12,6 +12,7 @@ interface CategoryData {
 
 // Functional component Categories
 function Categories() {
+    const navigate = useNavigate()
     const langContext = useContext(Context) // Using context to access language context
     const theme = useTelegramTheme() // Getting theme from custom Telegram theme hook
 
@@ -28,6 +29,20 @@ function Categories() {
     if (loading) return <Loading />
     // If there's an error, display the error message
     if (error) return <div>Xato: {error}</div>
+
+    useEffect(() => {
+		const tg = window.Telegram.WebApp
+
+		tg.BackButton.show()
+
+		tg.BackButton.onClick(() => {
+			navigate(-1)
+		})
+
+		return () => {
+			tg.BackButton.hide()
+		}
+	}, [])
 
     // Returning the list of categories
     return (
