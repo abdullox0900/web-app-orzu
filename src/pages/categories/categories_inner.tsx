@@ -75,9 +75,9 @@ function CategoriesInner() {
                 ) : (
                     <>
                         {/* Button to go back to the previous page */}
-                        <button onClick={goBack} style={theme == 'dark' ? { backgroundColor: '#27314a', color: 'white', borderColor: '#27314a' } : {}} className="flex items-center justify-center w-[40px] h-[40px] border-[1px] border-slate-200 rounded-full m-[20px]">
+                        {/* <button onClick={goBack} style={theme == 'dark' ? { backgroundColor: '#27314a', color: 'white', borderColor: '#27314a' } : {}} className="flex items-center justify-center w-[40px] h-[40px] border-[1px] border-slate-200 rounded-full m-[20px]">
                             <FaArrowLeft />
-                        </button>
+                        </button> */}
                         <ul className='grid grid-cols-2 gap-4 px-[20px] pb-[20px]'>
                             {
                                 // Mapping through the product data to render each product item

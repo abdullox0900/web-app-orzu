@@ -85,9 +85,9 @@ function CategoriesItem() {
             <TelegramBackButton />
             {contextHolder}
             {/* Button to go back to the previous page */}
-            <button onClick={goBack} style={theme == 'dark' ? { backgroundColor: '#27314a', color: 'white', borderColor: '#27314a' } : {}} className="flex items-center justify-center w-[40px] h-[40px] border-[1px] border-slate-200 rounded-full mb-[25px]">
+            {/* <button onClick={goBack} style={theme == 'dark' ? { backgroundColor: '#27314a', color: 'white', borderColor: '#27314a' } : {}} className="flex items-center justify-center w-[40px] h-[40px] border-[1px] border-slate-200 rounded-full mb-[25px]">
                 <FaArrowLeft />
-            </button>
+            </button> */}
             {/* Swiper component to display product images */}
             <Swiper className="mySwiper mb-[25px]">
                 {

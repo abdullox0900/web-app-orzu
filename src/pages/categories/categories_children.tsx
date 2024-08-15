@@ -51,9 +51,9 @@ function CategoriesChildren() {
             <TelegramBackButton />
 
             {/* Navigation link to go back to the home page */}
-            <NavLink to={'/'} style={theme == 'dark' ? { backgroundColor: '#27314a', color: 'white', borderColor: '#27314a' } : {}} className="flex items-center justify-center w-[40px] h-[40px] border-[1px] border-slate-200 rounded-full m-[20px]">
+            {/* <NavLink to={'/'} style={theme == 'dark' ? { backgroundColor: '#27314a', color: 'white', borderColor: '#27314a' } : {}} className="flex items-center justify-center w-[40px] h-[40px] border-[1px] border-slate-200 rounded-full m-[20px]">
                 <FaArrowLeft />
-            </NavLink>
+            </NavLink> */}
             <ul className='grid grid-cols-2 gap-4 px-[20px] pb-[20px]'>
                 {
                     // Mapping through the children data to render each child item

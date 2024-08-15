@@ -14,9 +14,9 @@ const TelegramBackButton: React.FC = () => {
       navigate(-1);
     });
 
-    return () => {
-      tg.BackButton.hide();
-    };
+    // return () => {
+    //   tg.BackButton.hide();
+    // };
   }, [navigate]);
 
   return null; // Bu komponent hech qanday UI element qaytarmaydi
