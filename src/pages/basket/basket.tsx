@@ -6,14 +6,15 @@ import { ShoppingCartContext, ContextType, CartItem, BasketItem } from '../../co
 import useTelegramTheme from '../../hooks/useTelegramTheme'
 import { Context } from '../../context/langContext'
 import { content, ContentMap } from '../../localization/content'
+import { Button, Modal } from 'antd';
+import TelegramBackButton from '../../components/TelegramBackButton/TelegramBackButton'
+
 
 interface LangContextType {
     lang: keyof ContentMap;
 }
 
 function Basket() {
-
-    const navigate = useNavigate()
 
     const context = useContext(ShoppingCartContext)
     const langContext = useContext(Context) as LangContextType
@@ -63,19 +64,7 @@ function Basket() {
         return items.reduce((total, item) => total + item.monthlyPayment * item.selectedTerm, 0);
     }
 
-    useEffect(() => {
-		const tg = window.Telegram.WebApp
-
-		tg.BackButton.show()
-
-		tg.BackButton.onClick(() => {
-			navigate(-1)
-		})
-
-		return () => {
-			tg.BackButton.hide()
-		}
-	}, [])
+  
 
     return (
         <>
@@ -90,19 +79,20 @@ function Basket() {
                 </div>
             ) : (
                 <>
+                <TelegramBackButton />
                     <ul className='flex flex-col gap-[20px] p-[20px] mb-[110px]'>
                         {cartItems.map((item: CartItem) => {
                             const basketItem = basketItems.find(bi => bi.productSlug === item.slug)
                             return (
-                                <li key={item.id} style={theme === 'dark' ? { backgroundColor: '#27314a', borderColor: '#27314a' } : {}} className='w-full flex gap-[10px] items-start relative p-[20px] rounded-[10px] border-[1px] border-slate-200'>
+                                <li key={item.id} style={theme === 'dark' ? { backgroundColor: '#27314a', borderColor: '#27314a' } : {}} className='w-full flex-wrap flex gap-[10px] items-start relative p-[20px] rounded-[10px] border-[1px] border-slate-200'>
                                     <img className='w-[110px] h-[110px]' src={item.images[0].image} alt="" />
                                     <div>
                                         <div style={theme === 'dark' ? { color: 'white' } : {}}>{item[`title_${lang}`]}</div>
                                         <div className='text-[16px] text-[#ffa500]'>{`${formatUzbekSom(item.price)} ${messages.som}`}</div>
                                         <div>Slug: {item.slug}</div>
-                                        <div className="flex mt-2">
+                                        <div className="flex flex-wrap gap-[10px] mt-2">
                                             {[3, 6, 9, 12].map((month) => (
-                                                <label key={month} className="inline-flex items-center mr-4">
+                                                <label key={month} className="inline-flex items-center">
                                                     <input
                                                         type="radio"
                                                         className="hidden"

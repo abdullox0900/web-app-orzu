@@ -3,8 +3,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../../context/langContext'
 import { ShoppingCartContext } from '../../context/shoppingCartContext'
 import { content, ContentMap } from '../../localization/content'
-import { notification } from 'antd'
+import { Button, Modal, notification } from 'antd'
 import { useNavigate } from 'react-router-dom'
+import TelegramBackButton from '../TelegramBackButton/TelegramBackButton'
 
 interface FormField {
     id: number
@@ -44,19 +45,7 @@ const Form: React.FC = () => {
         }
     }, [])
 
-    useEffect(() => {
-		const tg = window.Telegram.WebApp
 
-		tg.BackButton.show()
-
-		tg.BackButton.onClick(() => {
-			navigate(-1)
-		})
-
-		return () => {
-			tg.BackButton.hide()
-		}
-	}, [])
 
     useEffect(() => {
         fetch('https://shop-bot.orzugrand.uz/api/questions')
@@ -126,8 +115,8 @@ const Form: React.FC = () => {
                 const totalPrice = basketItems.reduce((sum, item) => sum + item.monthlyPayment * item.selectedTerm, 0)
                 const maxMonth = Math.max(...basketItems.map(item => item.selectedTerm))
 
-                return { 
-                    question_id: 11, 
+                return {
+                    question_id: 11,
                     price: totalPrice,
                     answer: JSON.stringify(basketItemsData),
                     month: maxMonth
@@ -171,6 +160,21 @@ const Form: React.FC = () => {
             })
     }
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+
     const renderInputField = (field: FormField) => {
         switch (field.type) {
             case "2":
@@ -207,18 +211,37 @@ const Form: React.FC = () => {
         }
     }
 
+    const info = () => {
+        Modal.info({
+          title: 'Добрый день! Обратите внимание на следующую информацию:',
+          content: (
+            <div>
+              <p>Если стоимость вашего товара превышает 3 000 000, вам необходимо внести предоплату в размере 20% от суммы. Это важное правило, которое следует учитывать при совершении сделки.</p>
+              <p>Пожалуйста, убедитесь, что вы готовы выполнить это условие перед оформлением покупки. Если у вас возникнут вопросы, не стесняйтесь обращаться за разъяснениями.</p>
+              <p>Желаем вам успешных покупок!</p>
+            </div>
+          ),
+          onOk() {},
+        });
+      };
+      
+
     return (
-        <form onSubmit={handleSubmit} className='flex flex-col gap-[20px] p-[20px]'>
-            {fields.slice(1).map(field => (
-                <div key={field.id} className='flex flex-col gap-[5px]'>
-                    <label className='text-gray-500 text-[14px]' dangerouslySetInnerHTML={{ __html: field.title_uz }}></label>
-                    {renderInputField(field)}
-                </div>
-            ))}
-            <button disabled={loading} type="submit" className="w-full text-center bg-orange-500 px-[20px] py-[15px] text-white rounded-[10px]">
-                {loading ? contents.laoding : contents.submit}
-            </button>
-        </form>
+        <>
+           <Button onClick={info} className='mx-[20px]'>Обратите внимание</Button>
+           <TelegramBackButton />
+            <form onSubmit={handleSubmit} className='flex flex-col gap-[20px] p-[20px]'>
+                {fields.slice(1).map(field => (
+                    <div key={field.id} className='flex flex-col gap-[5px]'>
+                        <label className='text-gray-500 text-[14px]' dangerouslySetInnerHTML={{ __html: field.title_uz }}></label>
+                        {renderInputField(field)}
+                    </div>
+                ))}
+                <button disabled={loading} type="submit" className="w-full text-center bg-orange-500 px-[20px] py-[15px] text-white rounded-[10px]">
+                    {loading ? contents.laoding : contents.submit}
+                </button>
+            </form>
+        </>
     )
 }
 
