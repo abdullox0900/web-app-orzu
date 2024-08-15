@@ -13,6 +13,7 @@ import { notification } from 'antd' // Importing notification from antd
 import { FaArrowLeft } from 'react-icons/fa' // Importing FaArrowLeft icon from react-icons
 import "swiper/css" // Importing Swiper CSS
 import useTelegramTheme from '../../hooks/useTelegramTheme' // Importing custom hook for Telegram theme
+import TelegramBackButton from '../../components/TelegramBackButton/TelegramBackButton'
 
 // Defining interface for category data
 interface CategoryData {
@@ -75,23 +76,13 @@ function CategoriesItem() {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
     }
 
-    useEffect(() => {
-		const tg = window.Telegram.WebApp
 
-		tg.BackButton.show()
-
-		tg.BackButton.onClick(() => {
-			navigate(-1)
-		})
-
-		return () => {
-			tg.BackButton.hide()
-		}
-	}, [])
+    
 
     // Returning the product details
     return (
         <section className='p-[20px] py-0 pb-0 relative'>
+            <TelegramBackButton />
             {contextHolder}
             {/* Button to go back to the previous page */}
             <button onClick={goBack} style={theme == 'dark' ? { backgroundColor: '#27314a', color: 'white', borderColor: '#27314a' } : {}} className="flex items-center justify-center w-[40px] h-[40px] border-[1px] border-slate-200 rounded-full mb-[25px]">

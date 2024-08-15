@@ -12,7 +12,6 @@ interface CategoryData {
 
 // Functional component Categories
 function Categories() {
-    const navigate = useNavigate()
     const langContext = useContext(Context) // Using context to access language context
     const theme = useTelegramTheme() // Getting theme from custom Telegram theme hook
 
@@ -30,19 +29,6 @@ function Categories() {
     // If there's an error, display the error message
     if (error) return <div>Xato: {error}</div>
 
-    useEffect(() => {
-		const tg = window.Telegram.WebApp
-
-		tg.BackButton.show()
-
-		tg.BackButton.onClick(() => {
-			navigate(-1)
-		})
-
-		return () => {
-			tg.BackButton.hide()
-		}
-	}, [])
 
     // Returning the list of categories
     return (

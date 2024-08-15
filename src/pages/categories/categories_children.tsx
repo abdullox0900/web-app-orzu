@@ -5,6 +5,7 @@ import Loading from '../../components/loading/loading' // Importing Loading comp
 import { Context } from '../../context/langContext' // Importing language context
 import useFetchData from '../../hooks/useFetchers' // Importing custom hook to fetch data
 import useTelegramTheme from '../../hooks/useTelegramTheme' // Importing custom hook for Telegram theme
+import TelegramBackButton from '../../components/TelegramBackButton/TelegramBackButton'
 
 // Defining interface for category data
 interface CategoryData {
@@ -43,23 +44,12 @@ function CategoriesChildren() {
         return <div>Xatolik yuz berdi: {error}</div>
     }
 
-    useEffect(() => {
-		const tg = window.Telegram.WebApp
-
-		tg.BackButton.show()
-
-		tg.BackButton.onClick(() => {
-			navigate(-1)
-		})
-
-		return () => {
-			tg.BackButton.hide()
-		}
-	}, [])
 
     // Returning the list of category children
     return (
         <>
+            <TelegramBackButton />
+
             {/* Navigation link to go back to the home page */}
             <NavLink to={'/'} style={theme == 'dark' ? { backgroundColor: '#27314a', color: 'white', borderColor: '#27314a' } : {}} className="flex items-center justify-center w-[40px] h-[40px] border-[1px] border-slate-200 rounded-full m-[20px]">
                 <FaArrowLeft />

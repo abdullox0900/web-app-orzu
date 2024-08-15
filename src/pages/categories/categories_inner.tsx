@@ -8,6 +8,7 @@ import { ShoppingCartContext } from '../../context/shoppingCartContext' // Impor
 import useFetchData from '../../hooks/useFetchers' // Importing custom hook to fetch data
 import useTelegramTheme from '../../hooks/useTelegramTheme' // Importing custom hook for Telegram theme
 import { content, ContentMap } from '../../localization/content' // Importing localization content and types
+import TelegramBackButton from '../../components/TelegramBackButton/TelegramBackButton'
 
 // Defining interface for category data
 interface CategoryData {
@@ -60,23 +61,11 @@ function CategoriesInner() {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
     }
 
-    useEffect(() => {
-		const tg = window.Telegram.WebApp
-
-		tg.BackButton.show()
-
-		tg.BackButton.onClick(() => {
-			navigate(-1)
-		})
-
-		return () => {
-			tg.BackButton.hide()
-		}
-	}, [])
-
     // Returning the list of products or a no product message
     return (
         <>
+            <TelegramBackButton />
+
             {
                 data?.data.length == 0 ? (
                     <div className='flex flex-col items-center justify-center'>
