@@ -12,6 +12,8 @@ export interface ContentMap {
 		notification: string
 		submit: string
 		laoding: string
+		monthly: string
+		month: string
 	}
 	uzc: {
 		all: string
@@ -25,6 +27,8 @@ export interface ContentMap {
 		notification: string
 		submit: string
 		laoding: string
+		monthly: string
+		month: string
 	}
 	ru: {
 		all: string
@@ -38,6 +42,8 @@ export interface ContentMap {
 		notification: string
 		submit: string
 		laoding: string
+		monthly: string
+		month: string
 	}
 }
 
@@ -55,6 +61,8 @@ export const content: ContentMap = {
 		notification: "Mahsulot savatchangizga qo'shildi.",
 		submit: 'Yuborish',
 		laoding: 'Yuborilmoqda...',
+		monthly: 'oyiga',
+		month: 'oy',
 	},
 	uzc: {
 		buy: 'Сотиб олиш',
@@ -68,6 +76,8 @@ export const content: ContentMap = {
 		notification: 'Маҳсулот саватчангизга қўшилди.',
 		submit: 'Юбориш',
 		laoding: 'Юборилмоқда...',
+		monthly: 'ойига',
+		month: 'ой'
 	},
 	ru: {
 		buy: 'Купить',
@@ -81,5 +91,7 @@ export const content: ContentMap = {
 		notification: 'Товар помещен в вашу корзину.',
 		submit: 'Отправить',
 		laoding: 'Отправляется...',
+		monthly: 'в месяц',	
+		month: 'месяц'
 	},
 }

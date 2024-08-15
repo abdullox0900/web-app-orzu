@@ -1,65 +1,102 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
 
-// Define type for Context values
-type ContextType = {
-    cartItems: any[] // Change 'any[]' to your specific item type if possible
-    addToCart: (item: any) => void // Change 'any' to your specific item type if possible
-    removeFromCart: (itemId: any) => void // Change 'any' to your specific item type if possible
-    clearCart: () => void
+export type CartItem = {
+    id: number;
+    price: number;
+    images: { image: string }[];
+    [key: string]: any; // Dinamik tillar uchun
 }
 
-// Create context with initial undefined value
+export type BasketItem = {
+    productSlug: string;
+    selectedTerm: number;
+    monthlyPayment: number;
+}
+
+export type ContextType = {
+    cartItems: CartItem[];
+    basketItems: BasketItem[];
+    addToCart: (item: CartItem) => void;
+    removeFromCart: (itemId: number) => void;
+    clearCart: () => void;
+    updateBasketItem: (productSlug: string, selectedTerm: number, monthlyPayment: number) => void;
+    clearBasket: () => void;
+}
+
 export const ShoppingCartContext = createContext<ContextType | undefined>(undefined)
 
-// Define props for Provider component
 type ProviderProps = {
-    children: ReactNode
+    children: ReactNode;
 }
 
-// Provider component
 export const ShoppingCartProvider = ({ children }: ProviderProps) => {
-    const [cartItems, setCartItems] = useState<any[]>([]) // Change 'any[]' to your specific item type if possible
+    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [basketItems, setBasketItems] = useState<BasketItem[]>([]);
 
-    // Load cart items from localStorage on mount
     useEffect(() => {
         const storedCartItems = localStorage.getItem('cartItems')
+        const storedBasketItems = localStorage.getItem('basketItems')
         if (storedCartItems) {
             setCartItems(JSON.parse(storedCartItems))
         }
+        if (storedBasketItems) {
+            setBasketItems(JSON.parse(storedBasketItems))
+        }
     }, [])
 
-    // Update localStorage whenever cartItems change
     useEffect(() => {
         localStorage.setItem('cartItems', JSON.stringify(cartItems))
-    }, [cartItems])
+        localStorage.setItem('basketItems', JSON.stringify(basketItems))
+    }, [cartItems, basketItems])
 
-    // Function to add item to cart
-    const addToCart = (item: any) => {
+    const addToCart = (item: CartItem) => {
         if (!cartItems.some(i => i.id === item.id)) {
             setCartItems([...cartItems, item])
         }
     }
 
-    // Function to remove item from cart
-    const removeFromCart = (itemId: any) => {
+    const removeFromCart = (itemId: number) => {
         const updatedCart = cartItems.filter(item => item.id !== itemId)
         setCartItems(updatedCart)
+        
+        // Remove corresponding basket item if exists
+        setBasketItems(prevItems => prevItems.filter(item => item.productSlug !== cartItems.find(i => i.id === itemId)?.slug))
     }
 
-    // Function to clear the entire cart
     const clearCart = () => {
         setCartItems([])
+        setBasketItems([])
     }
 
-    // Context values to be provided
+    const updateBasketItem = (productSlug: string, selectedTerm: number, monthlyPayment: number) => {
+        setBasketItems(prevItems => {
+            const existingItemIndex = prevItems.findIndex(item => item.productSlug === productSlug)
+            if (existingItemIndex !== -1) {
+                // Update existing item
+                const updatedItems = [...prevItems]
+                updatedItems[existingItemIndex] = { productSlug, selectedTerm, monthlyPayment }
+                return updatedItems
+            } else {
+                // Add new item
+                return [...prevItems, { productSlug, selectedTerm, monthlyPayment }]
+            }
+        })
+    }
+
+    const clearBasket = () => {
+        setBasketItems([])
+    }
+
     const contextValues: ContextType = {
         cartItems,
+        basketItems,
         addToCart,
         removeFromCart,
         clearCart,
+        updateBasketItem,
+        clearBasket,
     }
 
-    // Provide context values to children components
     return (
         <ShoppingCartContext.Provider value={contextValues}>
             {children}
