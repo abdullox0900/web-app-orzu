@@ -117,7 +117,6 @@ const Form: React.FC = () => {
 
                 return {
                     question_id: 11,
-                    price: totalPrice,
                     answer: JSON.stringify(basketItemsData),
                     month: maxMonth
                 }

@@ -89,7 +89,6 @@ function Basket() {
                                     <div>
                                         <div style={theme === 'dark' ? { color: 'white' } : {}}>{item[`title_${lang}`]}</div>
                                         <div className='text-[16px] text-[#ffa500]'>{`${formatUzbekSom(item.price)} ${messages.som}`}</div>
-                                        <div>Slug: {item.slug}</div>
                                         <div className="flex flex-wrap gap-[10px] mt-2">
                                             {[3, 6, 9, 12].map((month) => (
                                                 <label key={month} className="inline-flex items-center">
