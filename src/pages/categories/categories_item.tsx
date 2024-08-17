@@ -1,19 +1,18 @@
-import { useContext, useEffect } from 'react' // Importing useContext hook from React
+import type { NotificationArgsProps } from 'antd' // Importing NotificationArgsProps type from antd
+import { notification } from 'antd' // Importing notification from antd
+import { useContext } from 'react' // Importing useContext hook from React
 import { GrDeliver } from "react-icons/gr" // Importing GrDeliver icon from react-icons
 import { SlBasket } from 'react-icons/sl' // Importing SlBasket icon from react-icons
 import { useNavigate, useParams } from 'react-router-dom' // Importing useNavigate and useParams from react-router-dom
+import "swiper/css" // Importing Swiper CSS
 import { Swiper, SwiperSlide } from "swiper/react" // Importing Swiper and SwiperSlide components from swiper
 import Loading from '../../components/loading/loading' // Importing Loading component
+import TelegramBackButton from '../../components/TelegramBackButton/TelegramBackButton'
 import { Context } from '../../context/langContext' // Importing language context
 import { ShoppingCartContext } from '../../context/shoppingCartContext' // Importing shopping cart context
 import useFetchData from '../../hooks/useFetchers' // Importing custom hook to fetch data
-import { content, ContentMap } from '../../localization/content' // Importing localization content and types
-import type { NotificationArgsProps } from 'antd' // Importing NotificationArgsProps type from antd
-import { notification } from 'antd' // Importing notification from antd
-import { FaArrowLeft } from 'react-icons/fa' // Importing FaArrowLeft icon from react-icons
-import "swiper/css" // Importing Swiper CSS
 import useTelegramTheme from '../../hooks/useTelegramTheme' // Importing custom hook for Telegram theme
-import TelegramBackButton from '../../components/TelegramBackButton/TelegramBackButton'
+import { content, ContentMap } from '../../localization/content' // Importing localization content and types
 
 // Defining interface for category data
 interface CategoryData {
@@ -77,7 +76,7 @@ function CategoriesItem() {
     }
 
 
-    
+
 
     // Returning the product details
     return (
@@ -106,7 +105,7 @@ function CategoriesItem() {
                 {/* Product price */}
                 <div className='text-[18px] text-[#ffa500]'>{`${formatUzbekSom(product.price)} ${xabarlar.som}`}</div>
                 {/* Product monthly payment */}
-                <span className='text-[12px] bg-[#F16736] text-white p-[4px] rounded-[5px]'>{`${formatUzbekSom(product.monthly_pay)} ${xabarlar.som} * 1 oy`}</span>
+                <span className='text-[12px] bg-[#F16736] text-white p-[4px] rounded-[5px]'>{`${formatUzbekSom((Math.round(product.price * 0.40 + product.price) / 12))} ${xabarlar.som} x 12 oy`}</span>
 
                 {/* Delivery information */}
                 <div className='flex items-center gap-[5px]'>

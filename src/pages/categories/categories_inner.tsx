@@ -1,14 +1,13 @@
-import { useContext, useEffect } from 'react' // Importing useContext hook from React
-import { FaArrowLeft } from 'react-icons/fa' // Importing FaArrowLeft icon from react-icons
+import { useContext } from 'react' // Importing useContext hook from React
 import { NavLink, useNavigate, useParams } from 'react-router-dom' // Importing NavLink, useNavigate, and useParams from react-router-dom
 import { NoProduct } from '../../assets/ilustrations' // Importing NoProduct illustration
 import Loading from '../../components/loading/loading' // Importing Loading component
+import TelegramBackButton from '../../components/TelegramBackButton/TelegramBackButton'
 import { Context } from '../../context/langContext' // Importing language context
 import { ShoppingCartContext } from '../../context/shoppingCartContext' // Importing shopping cart context
 import useFetchData from '../../hooks/useFetchers' // Importing custom hook to fetch data
 import useTelegramTheme from '../../hooks/useTelegramTheme' // Importing custom hook for Telegram theme
 import { content, ContentMap } from '../../localization/content' // Importing localization content and types
-import TelegramBackButton from '../../components/TelegramBackButton/TelegramBackButton'
 
 // Defining interface for category data
 interface CategoryData {
@@ -88,7 +87,7 @@ function CategoriesInner() {
                                                 <img className='w-[110px] h-[110px] mx-auto mb-[10px]' src={item.image} alt="" />
                                                 <div style={theme == 'dark' ? { color: 'white' } : {}} className='text-left text-[16px]'>{item[`title_${lang}`].length > 14 ? item[`title_${lang}`].slice(0, 14) + '...' : item[`title_${lang}`]}</div>
                                                 <div className='text-[16px] text-[#ffa500]'>{`${formatUzbekSom(item.price)} ${messages.som}`}</div>
-                                                <span className='text-[11px] bg-[#F16736] text-white p-[4px] rounded-[5px] mb-[8px]'>{`${formatUzbekSom(item.monthly_pay)} ${messages.som} * 1 oy`}</span>
+                                                <span className='text-[11px] bg-[#F16736] text-white p-[4px] rounded-[5px] mb-[8px]'>{`${formatUzbekSom(Math.round((item.price * 0.40 + item.price) / 12))} ${messages.som} x 12 oy`}</span>
                                                 {/* <button className='flex flex-col items-center justify-center text-[18px] w-full h-[40px] text-green-500 border-[1px] border-green-500 rounded-[8px]' onClick={() => addToCart(item)}>
                                                 <SlBasket />
                                             </button> */}

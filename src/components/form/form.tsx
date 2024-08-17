@@ -1,10 +1,10 @@
+import { Button, Modal, notification } from 'antd'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Context } from '../../context/langContext'
 import { ShoppingCartContext } from '../../context/shoppingCartContext'
 import { content, ContentMap } from '../../localization/content'
-import { Button, Modal, notification } from 'antd'
-import { useNavigate } from 'react-router-dom'
 import TelegramBackButton from '../TelegramBackButton/TelegramBackButton'
 
 interface FormField {
@@ -44,8 +44,6 @@ const Form: React.FC = () => {
             setChatId(tg.initDataUnsafe.user.id)
         }
     }, [])
-
-
 
     useEffect(() => {
         fetch('https://shop-bot.orzugrand.uz/api/questions')
@@ -159,19 +157,19 @@ const Form: React.FC = () => {
             })
     }
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     const showModal = () => {
-        setIsModalOpen(true);
-    };
+        setIsModalOpen(true)
+    }
 
     const handleOk = () => {
-        setIsModalOpen(false);
-    };
+        setIsModalOpen(false)
+    }
 
     const handleCancel = () => {
-        setIsModalOpen(false);
-    };
+        setIsModalOpen(false)
+    }
 
 
     const renderInputField = (field: FormField) => {
@@ -212,23 +210,23 @@ const Form: React.FC = () => {
 
     const info = () => {
         Modal.info({
-          title: 'Добрый день! Обратите внимание на следующую информацию:',
-          content: (
-            <div>
-              <p>Если стоимость вашего товара превышает 3 000 000, вам необходимо внести предоплату в размере 20% от суммы. Это важное правило, которое следует учитывать при совершении сделки.</p>
-              <p>Пожалуйста, убедитесь, что вы готовы выполнить это условие перед оформлением покупки. Если у вас возникнут вопросы, не стесняйтесь обращаться за разъяснениями.</p>
-              <p>Желаем вам успешных покупок!</p>
-            </div>
-          ),
-          onOk() {},
-        });
-      };
-      
+            title: 'Добрый день! Обратите внимание на следующую информацию:',
+            content: (
+                <div>
+                    <p>Если стоимость вашего товара превышает 3 000 000, вам необходимо внести предоплату в размере 20% от суммы. Это важное правило, которое следует учитывать при совершении сделки.</p>
+                    <p>Пожалуйста, убедитесь, что вы готовы выполнить это условие перед оформлением покупки. Если у вас возникнут вопросы, не стесняйтесь обращаться за разъяснениями.</p>
+                    <p>Желаем вам успешных покупок!</p>
+                </div>
+            ),
+            onOk() { },
+        })
+    }
+
 
     return (
         <>
-           <Button onClick={info} className='mx-[20px]'>Обратите внимание</Button>
-           <TelegramBackButton />
+            <Button onClick={info} className='mx-[20px]'>Обратите внимание</Button>
+            <TelegramBackButton />
             <form onSubmit={handleSubmit} className='flex flex-col gap-[20px] p-[20px]'>
                 {fields.slice(1).map(field => (
                     <div key={field.id} className='flex flex-col gap-[5px]'>
