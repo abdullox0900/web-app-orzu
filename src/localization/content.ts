@@ -14,6 +14,16 @@ export interface ContentMap {
 		laoding: string
 		monthly: string
 		month: string
+		infoTitle: string
+		info: string
+		fieldRequired: string
+		error: string
+		fillAllFields: string
+		success: string
+		// formSubmittedSuccessfully: string
+		formSubmissionError: string
+		optionalField: string
+		payAttention: string
 	}
 	uzc: {
 		all: string
@@ -29,6 +39,16 @@ export interface ContentMap {
 		laoding: string
 		monthly: string
 		month: string
+		infoTitle: string
+		info: string
+		fieldRequired: string
+		error: string
+		fillAllFields: string
+		success: string
+		// formSubmittedSuccessfully: string
+		formSubmissionError: string
+		optionalField: string
+		payAttention: string
 	}
 	ru: {
 		all: string
@@ -44,6 +64,16 @@ export interface ContentMap {
 		laoding: string
 		monthly: string
 		month: string
+		infoTitle: string
+		info: string
+		fieldRequired: string
+		error: string
+		fillAllFields: string
+		success: string
+		// formSubmittedSuccessfully: string
+		formSubmissionError: string
+		optionalField: string
+		payAttention: string
 	}
 }
 
@@ -63,6 +93,15 @@ export const content: ContentMap = {
 		laoding: 'Yuborilmoqda...',
 		monthly: 'oyiga',
 		month: 'oy',
+		infoTitle: "Hayrli kun Iltimos, quyidagi ma'lumotlarga e'tibor bering:",
+		info: "Tovaringizning narxi 3 000 000 dan oshsa, siz summaning 30 foizini oldindan to'lashingiz kerak. Bu bitim tuzishda e'tiborga olinishi kerak bo'lgan muhim qoidadir. Xaridni yakunlashdan oldin ushbu shartga rioya qilishga tayyor ekanligingizga ishonch hosil qiling. Agar sizda biron bir savol bo'lsa, tushuntirish uchun so'rashdan tortinmang.  Sizga muvaffaqiyatli xaridlar tilaymiz!",
+		fieldRequired: "Bu maydon to'ldirilishi shart",
+		error: 'Xatolik',
+		success: 'Muvaffaqiyatli',
+		fillAllFields: "Iltimos, barcha majburiy maydonlarni to'ldiring",
+		formSubmissionError: "Forma yuborishda xatolik yuz berdi",
+		optionalField: "Bu maydonni to'ldirish ixtiyoriy",
+		payAttention: "E'tibor bering",
 	},
 	uzc: {
 		buy: 'Сотиб олиш',
@@ -77,7 +116,17 @@ export const content: ContentMap = {
 		submit: 'Юбориш',
 		laoding: 'Юборилмоқда...',
 		monthly: 'ойига',
-		month: 'ой'
+		month: 'ой',
+		infoTitle: 'Қуйидаги маълумотларга эътибор беринг:',
+		info: 'Товарингизнинг нархи 3 000 000 дан ошса, сиз сумманинг 30 фоизини олдиндан тўлашингиз керак. Бу битим тузишда эътиборга олиниши керак бўлган муҳим қоидатир. Харидни якунлашдан олдин ушбу шартга риоя қилишга тайёр эканлигингизга ишонч ҳосил қилинг. Агар сизда бирон бир савол бўлса, тушунтириш учун сўрашдан тортинманг. Сизга муваффақиятли харидлар тилаймиз!',
+		fieldRequired: "Бу майдон тўлдирилиши шарт",
+		error: 'Хатолик',
+		success: 'Муваффақиятли',
+		fillAllFields: "Илтимос, барча мажбурий майдонларни тўлдиринг",
+		formSubmissionError: "Форма юборишда хатолик юз берди",
+		optionalField: 'Бу майдонни тўлдириш ихтиёрий',
+		payAttention: "Диққат қилинг",
+
 	},
 	ru: {
 		buy: 'Купить',
@@ -92,6 +141,16 @@ export const content: ContentMap = {
 		submit: 'Отправить',
 		laoding: 'Отправляется...',
 		monthly: 'в месяц',	
-		month: 'месяц'
+		month: 'месяц',
+		infoTitle: 'Обратите внимание на следующие условия:',
+		info: 'Если стоимость вашего товара превышает 3 000 000 сум, вам необходимо внести предоплату в размере 30% от суммы. Это важное правило, которое следует учитывать при заключении сделки. Перед завершением покупки убедитесь, что вы готовы соблюдать это условие. Если у вас есть какие-либо вопросы, не стесняйтесь задать их для уточнения. Желаем вам успешных покупок!',
+		fieldRequired: "Это поле обязательно для заполнения",
+		error: 'Ошибка',
+		success: 'Успешно',
+		fillAllFields: "Пожалуйста, заполните все обязательные пол",
+		formSubmissionError: "Произошла ошибка при отправке формы",
+		optionalField: 'Это поле не обязательно для заполнения',
+		payAttention: "Обратите внимание",
+
 	},
 }

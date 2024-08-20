@@ -14,6 +14,10 @@ interface FormField {
     type: string
 }
 
+interface LangContextType {
+    lang: keyof ContentMap;
+}
+
 const Form: React.FC = () => {
 
     const navigate = useNavigate()
@@ -23,8 +27,8 @@ const Form: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const [errors, setErrors] = useState<{ [key: number]: string }>({})
 
-    const langContext = useContext(Context)
-    const context = useContext(ShoppingCartContext)
+    const langContext = useContext(Context) as LangContextType
+    const context = useContext(ShoppingCartContext) 
 
     if (!context || !langContext) {
         throw new Error('useContext must be inside a Provider with a valid value')
@@ -34,6 +38,8 @@ const Form: React.FC = () => {
     const { cartItems, clearCart, basketItems } = context
 
     const contents = content[lang as keyof ContentMap]
+
+    const messages = content[lang]
 
     const [chatId, setChatId] = useState<string | null>(null)
 
@@ -78,8 +84,7 @@ const Form: React.FC = () => {
                 const value = formData[field.id]
                 console.log(`Validating field ${field.id}:`, value) // Debug
                 if (!value || (typeof value === 'string' && value.trim() === '')) {
-                    newErrors[field.id] = 'Bu maydon to\'ldirilishi shart'
-                }
+                    newErrors[field.id] = `${messages.fillAllFields}`                }
             }
         })
         console.log('Validation errors:', newErrors) // Debug
@@ -93,8 +98,8 @@ const Form: React.FC = () => {
         if (!validateForm()) {
             console.log('Form validation failed') // Debug
             notification.error({
-                message: 'Xatolik',
-                description: 'Iltimos, barcha majburiy maydonlarni to\'ldiring',
+                message: `${messages.error}`,
+                description: `${messages.fillAllFields}`,
             })
             return
         }
@@ -148,8 +153,8 @@ const Form: React.FC = () => {
             .catch(error => {
                 console.error('Error submitting form:', error)
                 notification.error({
-                    message: 'Xatolik',
-                    description: 'Forma yuborishda xatolik yuz berdi',
+                    message: `${messages.error}`,
+                    description: `${messages.formSubmissionError}`,
                 })
             })
             .finally(() => {
@@ -185,7 +190,7 @@ const Form: React.FC = () => {
                         />
                         {errors[field.id] && <p className="text-red-500 text-sm mt-1">{errors[field.id]}</p>}
                         {(field.id === 10 || field.id === 4 || field.id === 11) && (
-                            <p className="text-gray-500 text-sm mt-1">Bu maydonni to'ldirish ixtiyoriy</p>
+                            <p className="text-gray-500 text-sm mt-1">{messages.fillAllFields}</p>
                         )}
                     </div>
                 )
@@ -199,7 +204,7 @@ const Form: React.FC = () => {
                         />
                         {errors[field.id] && <p className="text-red-500 text-sm mt-1">{errors[field.id]}</p>}
                         {(field.id === 10 || field.id === 4 || field.id === 11) && (
-                            <p className="text-gray-500 text-sm mt-1">Bu maydonni to'ldirish ixtiyoriy</p>
+                            <p className="text-gray-500 text-sm mt-1">{messages.optionalField}</p>
                         )}
                     </div>
                 )
@@ -210,12 +215,10 @@ const Form: React.FC = () => {
 
     const info = () => {
         Modal.info({
-            title: 'Добрый день! Обратите внимание на следующую информацию:',
+            title: `${messages.infoTitle}`,
             content: (
                 <div>
-                    <p>Если стоимость вашего товара превышает 3 000 000, вам необходимо внести предоплату в размере 20% от суммы. Это важное правило, которое следует учитывать при совершении сделки.</p>
-                    <p>Пожалуйста, убедитесь, что вы готовы выполнить это условие перед оформлением покупки. Если у вас возникнут вопросы, не стесняйтесь обращаться за разъяснениями.</p>
-                    <p>Желаем вам успешных покупок!</p>
+                    <p>{messages.info}</p>
                 </div>
             ),
             onOk() { },
@@ -225,7 +228,7 @@ const Form: React.FC = () => {
 
     return (
         <>
-            <Button onClick={info} className='mx-[20px]'>Обратите внимание</Button>
+            <Button onClick={info} className='mx-[20px]'>{messages.payAttention}</Button>
             <TelegramBackButton />
             <form onSubmit={handleSubmit} className='flex flex-col gap-[20px] p-[20px]'>
                 {fields.slice(1).map(field => (
