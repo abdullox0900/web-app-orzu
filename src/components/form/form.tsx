@@ -232,7 +232,7 @@ const Form: React.FC = () => {
 
     return (
         <>
-            <Button onClick={info} className='mx-[20px] '>{messages.payAttention}</Button>
+            <Button onClick={info} className='mx-[20px] bg-orange-500 text-white'>{messages.payAttention}</Button>
             <TelegramBackButton />
             <form onSubmit={handleSubmit} className='flex flex-col gap-[20px] p-[20px]'>
                 {fields.slice(1).map(field => (
