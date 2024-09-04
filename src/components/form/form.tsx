@@ -80,11 +80,11 @@ const Form: React.FC = () => {
     const validateForm = () => {
         const newErrors: { [key: number]: string } = {}
         fields.forEach(field => {
-            if (field.id !== 10 && field.id !== 4 && field.id !== 11) {
+            if (field.id !== 10 && field.id !== 4 && field.id !== 11 && field.id !== 2) {
                 const value = formData[field.id]
                 console.log(`Validating field ${field.id}:`, value) // Debug
                 if (!value || (typeof value === 'string' && value.trim() === '')) {
-                    newErrors[field.id] = `${messages.fillAllFields}`                }
+                    newErrors[field.id] = `${messages.fillAllFields}`}
             }
         })
         console.log('Validation errors:', newErrors) // Debug
@@ -176,6 +176,10 @@ const Form: React.FC = () => {
         setIsModalOpen(false)
     }
 
+    useEffect(() => {
+        info()
+    }, [])
+
 
     const renderInputField = (field: FormField) => {
         switch (field.type) {
@@ -189,9 +193,9 @@ const Form: React.FC = () => {
                             onChange={(e) => handleChange(field.id, e.target.value)}
                         />
                         {errors[field.id] && <p className="text-red-500 text-sm mt-1">{errors[field.id]}</p>}
-                        {(field.id === 10 || field.id === 4 || field.id === 11) && (
+                        {/* {(field.id === 10 || field.id === 4 || field.id === 11) && (
                             <p className="text-gray-500 text-sm mt-1">{messages.fillAllFields}</p>
-                        )}
+                        )} */}
                     </div>
                 )
             case "3":
@@ -203,9 +207,9 @@ const Form: React.FC = () => {
                             onChange={(e) => handleChange(field.id, e.target.files ? e.target.files[0] : null)}
                         />
                         {errors[field.id] && <p className="text-red-500 text-sm mt-1">{errors[field.id]}</p>}
-                        {(field.id === 10 || field.id === 4 || field.id === 11) && (
-                            <p className="text-gray-500 text-sm mt-1">{messages.optionalField}</p>
-                        )}
+                        {/* {(field.id === 10 || field.id === 4 || field.id === 11) && (
+                            // <p className="text-gray-500 text-sm mt-1">{messages.optionalField}</p>
+                        )} */}
                     </div>
                 )
             default:
@@ -228,7 +232,7 @@ const Form: React.FC = () => {
 
     return (
         <>
-            <Button onClick={info} className='mx-[20px]'>{messages.payAttention}</Button>
+            <Button onClick={info} className='mx-[20px] '>{messages.payAttention}</Button>
             <TelegramBackButton />
             <form onSubmit={handleSubmit} className='flex flex-col gap-[20px] p-[20px]'>
                 {fields.slice(1).map(field => (
