@@ -182,7 +182,7 @@ const Form: React.FC = () => {
 
 
     const renderInputField = (field: FormField) => {
-        switch (field.type) {
+        switch (`${field.type}`) {
             case "2":
                 return (
                     <div>
